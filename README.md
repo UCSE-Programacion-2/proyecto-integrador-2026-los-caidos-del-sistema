@@ -1,16 +1,17 @@
-Tablero de GitHub Projects: [Link a tu tablero]
+Tablero de GitHub Projects: [Ver Tablero](https://github.com/orgs/UCSE-Programacion-2/projects/34) 
 
-# [Nombre del Proyecto / Equipo] - Programación II 2026
+# Los Caídos del Sistema - Programación II 2026
 
 ## 👥 Integrantes
-* **Apellido, Nombre** - [GitHub Profile](link)
-* **Apellido, Nombre** - [GitHub Profile](link)
-* **Apellido, Nombre** - [GitHub Profile](link)
+* **Copa, Elina Luisana de los Angeles** - [GitHub Profile](https://github.com/luisanaacopa)
+* **Perez, Lucas Santiago** - [GitHub Profile](https://github.com/lucassperezz)
+* **Valdez, Melani Agustina** - [GitHub Profile](https://github.com/agustinavaldezz)
 
 ## 🏢 Cliente Real Elegido
-* **Nombre:** [Nombre del Comercio en Jujuy]
-* **Rubro:** [Ej: Indumentaria Deportiva]
-* **Justificación:** [Explicar brevemente por qué el catálogo es apto para un CRUD]
+* **Nombre:** Balbi-Home.
+* **Rubro:** Comercio minorista (retail) de artículos para el hogar, incluyendo electrodomésticos, bazar, línea blanca y decoración.
+* **Redes sociales:** - [Instragram](https://www.instagram.com/balbihome_jujuy?igsh=MXQwY3FhczNua280cg==) - [Facebook](https://www.facebook.com/share/18gMqwsBkf/?mibextid=wwXIfr) 
+* **Justificación:** Su catálogo variado con múltiples categorías y atributos como precio, stock e imágenes justifica un sistema de gestión para alta, modificación y baja de productos.
 
 ## 📝 Reglas de Contribución
 * Uso de Git Flow.
@@ -29,3 +30,4 @@ Tablero de GitHub Projects: [Link a tu tablero]
 * **URL de Producción Frontend:** *Próximamente*
 * **URL de Producción Backend:** *Próximamente*
 * **Video de respaldo:** *Link (Loom/Youtube/Drive)*
+
