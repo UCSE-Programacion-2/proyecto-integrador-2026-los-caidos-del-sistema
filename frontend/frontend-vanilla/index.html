@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Balbi Home</title>
+    <title>Balbi Home — El hogar de tus sueños</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/home.css" />
   </head>
   <body>
 
@@ -20,7 +21,7 @@
         </a>
         <nav class="navbar__nav">
           <ul class="navbar__links">
-            <li><a href="index.html">Inicio</a></li>
+            <li><a href="index.html" class="active">Inicio</a></li>
             <li><a href="catalogo.html">Catálogo</a></li>
             <li><a href="carrito.html">Carrito</a></li>
             <li><a href="login.html">Ingresar</a></li>
@@ -34,10 +35,104 @@
       </div>
     </header>
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main>
-      <p>Contenido de la página</p>
-    </main>
+    <!-- BANNER PRINCIPAL -->
+    <section class="banner">
+      <div class="banner__content">
+        <h1 class="banner__title">El hogar de <span>tus sueños</span></h1>
+        <p class="banner__subtitle">Electro · Blanco · Bazar · Deco</p>
+        <a href="catalogo.html" class="btn btn--primary">Ver Catálogo</a>
+      </div>
+    </section>
+
+    <!-- CATEGORÍAS -->
+    <section class="categorias">
+      <div class="section__container">
+        <h2 class="section__title">Nuestras Categorías</h2>
+        <div class="categorias__grid">
+          <div class="categoria__card">
+            <div class="categoria__icon">🍳</div>
+            <h3>Bazar</h3>
+            <p>Vajilla y utensilios</p>
+          </div>
+          <div class="categoria__card">
+            <div class="categoria__icon">🛋️</div>
+            <h3>Decoración</h3>
+            <p>Adornos y cuadros</p>
+          </div>
+          <div class="categoria__card">
+            <div class="categoria__icon">🛏️</div>
+            <h3>Blanco</h3>
+            <p>Sábanas y cortinas</p>
+          </div>
+          <div class="categoria__card">
+            <div class="categoria__icon">🔌</div>
+            <h3>Electrodomésticos</h3>
+            <p>Pequeños aparatos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTOS DESTACADOS -->
+    <section class="destacados">
+      <div class="section__container">
+        <h2 class="section__title">Productos Destacados</h2>
+        <div class="productos__grid">
+
+          <div class="producto__card">
+            <div class="producto__img">
+              <span>📦</span>
+            </div>
+            <div class="producto__info">
+              <span class="producto__categoria">Bazar</span>
+              <h3 class="producto__nombre">Juego de Vajilla</h3>
+              <p class="producto__precio">$15.999</p>
+              <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+            </div>
+          </div>
+
+          <div class="producto__card">
+            <div class="producto__img">
+              <span>📦</span>
+            </div>
+            <div class="producto__info">
+              <span class="producto__categoria">Deco</span>
+              <h3 class="producto__nombre">Espejo Moderno</h3>
+              <p class="producto__precio">$22.500</p>
+              <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+            </div>
+          </div>
+
+          <div class="producto__card">
+            <div class="producto__img">
+              <span>📦</span>
+            </div>
+            <div class="producto__info">
+              <span class="producto__categoria">Blanco</span>
+              <h3 class="producto__nombre">Juego de Sábanas</h3>
+              <p class="producto__precio">$18.200</p>
+              <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+            </div>
+          </div>
+
+          <div class="producto__card">
+            <div class="producto__img">
+              <span>📦</span>
+            </div>
+            <div class="producto__info">
+              <span class="producto__categoria">Electro</span>
+              <h3 class="producto__nombre">Licuadora</h3>
+              <p class="producto__precio">$29.999</p>
+              <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+            </div>
+          </div>
+
+        </div>
+        <div class="destacados__cta">
+          <a href="catalogo.html" class="btn btn--primary">Ver todos los productos</a>
+        </div>
+      </div>
+    </section>
 
     <!-- FOOTER -->
     <footer class="footer">

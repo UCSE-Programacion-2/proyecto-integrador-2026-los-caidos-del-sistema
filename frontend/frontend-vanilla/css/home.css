@@ -1,0 +1,227 @@
+/* ========================================
+   HOME PAGE — BALBI HOME
+   feat/ui-home
+   ======================================== */
+
+/* === BOTONES GLOBALES === */
+.btn {
+  display: inline-block;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-family: var(--font-secondary);
+  font-weight: 600;
+  font-size: var(--text-base);
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  border: 2px solid var(--color-primary);
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+}
+
+.btn--outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+/* === SECCIONES === */
+.section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+}
+
+.section__title {
+  font-family: var(--font-primary);
+  font-size: var(--text-3xl);
+  color: var(--color-secondary);
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+}
+
+.section__title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: var(--color-primary);
+  margin: var(--spacing-sm) auto 0;
+}
+
+/* === BANNER === */
+.banner {
+  background: linear-gradient(135deg, var(--color-bg-dark) 0%, #3d1a1a 100%);
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+}
+
+.banner__content {
+  max-width: 700px;
+}
+
+.banner__title {
+  font-family: var(--font-primary);
+  font-size: var(--text-4xl);
+  color: var(--color-text-light);
+  margin-bottom: var(--spacing-md);
+  line-height: 1.2;
+}
+
+.banner__title span {
+  color: var(--color-primary);
+}
+
+.banner__subtitle {
+  font-size: var(--text-lg);
+  color: #aaa;
+  margin-bottom: var(--spacing-xl);
+  letter-spacing: 2px;
+}
+
+/* === CATEGORÍAS === */
+.categorias {
+  background-color: var(--color-bg-soft);
+}
+
+.categorias__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.categoria__card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.categoria__card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+.categoria__icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.categoria__card h3 {
+  font-family: var(--font-primary);
+  font-size: var(--text-lg);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.categoria__card p {
+  font-size: var(--text-sm);
+  color: var(--color-text-soft);
+}
+
+/* === PRODUCTOS DESTACADOS === */
+.productos__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.producto__card {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.producto__card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.producto__img {
+  background-color: var(--color-accent);
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.producto__info {
+  padding: var(--spacing-md);
+}
+
+.producto__categoria {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.producto__nombre {
+  font-family: var(--font-primary);
+  font-size: var(--text-lg);
+  color: var(--color-secondary);
+  margin: var(--spacing-xs) 0;
+}
+
+.producto__precio {
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.destacados__cta {
+  text-align: center;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .banner__title {
+    font-size: var(--text-3xl);
+  }
+
+  .categorias__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .productos__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .categorias__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .productos__grid {
+    grid-template-columns: 1fr;
+  }
+}
