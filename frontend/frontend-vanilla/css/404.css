@@ -1,0 +1,100 @@
+/* ========================================
+   PÁGINA 404 — BALBI HOME
+   feat/ui-404
+   ======================================== */
+
+.error404 {
+  background-color: var(--color-bg-soft);
+  min-height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+}
+
+.error404__container {
+  width: 100%;
+  max-width: 720px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-2xl);
+  text-align: center;
+}
+
+.error404__codigo {
+  font-family: var(--font-primary);
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.error404__titulo {
+  font-family: var(--font-primary);
+  font-size: var(--text-3xl);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-md);
+}
+
+.error404__mensaje {
+  font-family: var(--font-secondary);
+  font-size: var(--text-lg);
+  color: var(--color-text-soft);
+  max-width: 520px;
+  margin: 0 auto var(--spacing-xl);
+}
+
+.error404__acciones {
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Responsive tablet --- */
+@media (max-width: 768px) {
+  .error404 {
+    min-height: 60vh;
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .error404__container {
+    padding: var(--spacing-xl);
+  }
+
+  .error404__codigo {
+    font-size: 5rem;
+  }
+
+  .error404__titulo {
+    font-size: var(--text-2xl);
+  }
+
+  .error404__mensaje {
+    font-size: var(--text-base);
+  }
+}
+
+/* --- Responsive mobile --- */
+@media (max-width: 480px) {
+  .error404__container {
+    padding: var(--spacing-lg);
+  }
+
+  .error404__codigo {
+    font-size: 4rem;
+  }
+
+  .error404__titulo {
+    font-size: var(--text-xl);
+  }
+
+  .error404__mensaje {
+    font-size: var(--text-sm);
+  }
+
+  .error404__acciones .btn {
+    width: 100%;
+  }
+}
