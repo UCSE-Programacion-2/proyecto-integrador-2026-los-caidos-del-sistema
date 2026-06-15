@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo — Balbi Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/catalogo.css" />
+  </head>
+  <body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="navbar__container">
+        <a href="index.html" class="navbar__logo">
+          BALBI <span>HOME</span>
+        </a>
+        <nav class="navbar__nav">
+          <ul class="navbar__links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html" class="active">Catálogo</a></li>
+            <li><a href="carrito.html">Carrito</a></li>
+            <li><a href="login.html">Ingresar</a></li>
+          </ul>
+        </nav>
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ENCABEZADO -->
+    <section class="catalogo__header">
+      <div class="section__container">
+        <h1 class="catalogo__titulo">Catálogo de Productos</h1>
+        <p class="catalogo__subtitulo">Encontrá todo lo que necesitás para tu hogar</p>
+      </div>
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="catalogo__main">
+      <div class="section__container catalogo__layout">
+
+        <!-- FILTROS LATERALES -->
+        <aside class="filtros">
+          <h2 class="filtros__titulo">Filtrar por</h2>
+
+          <div class="filtros__grupo">
+            <h3 class="filtros__subtitulo">Categoría</h3>
+            <ul class="filtros__lista">
+              <li><label class="filtros__opcion"><input type="checkbox" /> Bazar</label></li>
+              <li><label class="filtros__opcion"><input type="checkbox" /> Decoración</label></li>
+              <li><label class="filtros__opcion"><input type="checkbox" /> Blanco</label></li>
+              <li><label class="filtros__opcion"><input type="checkbox" /> Electrodomésticos</label></li>
+            </ul>
+          </div>
+
+          <div class="filtros__grupo">
+            <h3 class="filtros__subtitulo">Precio</h3>
+            <ul class="filtros__lista">
+              <li><label class="filtros__opcion"><input type="radio" name="precio" /> Hasta $10.000</label></li>
+              <li><label class="filtros__opcion"><input type="radio" name="precio" /> $10.000 – $25.000</label></li>
+              <li><label class="filtros__opcion"><input type="radio" name="precio" /> Más de $25.000</label></li>
+            </ul>
+          </div>
+
+          <div class="filtros__grupo">
+            <h3 class="filtros__subtitulo">Disponibilidad</h3>
+            <ul class="filtros__lista">
+              <li><label class="filtros__opcion"><input type="checkbox" /> En stock</label></li>
+              <li><label class="filtros__opcion"><input type="checkbox" /> Sin stock</label></li>
+            </ul>
+          </div>
+
+          <button class="btn btn--primary filtros__btn">Aplicar filtros</button>
+        </aside>
+
+        <!-- PRODUCTOS -->
+        <section class="catalogo__productos">
+
+          <div class="productos__barra">
+            <p class="productos__total">Mostrando <strong>8</strong> productos</p>
+            <div class="productos__ordenar">
+              <label for="orden">Ordenar por:</label>
+              <select id="orden" class="productos__select">
+                <option>Más relevantes</option>
+                <option>Menor precio</option>
+                <option>Mayor precio</option>
+                <option>Nombre A-Z</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="catalogo__grid">
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Bazar</span>
+                <h3 class="producto__nombre">Juego de Vajilla</h3>
+                <p class="producto__precio">$15.999</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Decoración</span>
+                <h3 class="producto__nombre">Espejo Moderno</h3>
+                <p class="producto__precio">$22.500</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Blanco</span>
+                <h3 class="producto__nombre">Juego de Sábanas</h3>
+                <p class="producto__precio">$18.200</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Electrodomésticos</span>
+                <h3 class="producto__nombre">Licuadora</h3>
+                <p class="producto__precio">$29.999</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Bazar</span>
+                <h3 class="producto__nombre">Set de Cuchillos</h3>
+                <p class="producto__precio">$12.300</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Decoración</span>
+                <h3 class="producto__nombre">Cuadro Abstracto</h3>
+                <p class="producto__precio">$9.800</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Blanco</span>
+                <h3 class="producto__nombre">Cortinas Blackout</h3>
+                <p class="producto__precio">$24.000</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+            <div class="producto__card">
+              <div class="producto__img"><span>📦</span></div>
+              <div class="producto__info">
+                <span class="producto__categoria">Electrodomésticos</span>
+                <h3 class="producto__nombre">Tostadora</h3>
+                <p class="producto__precio">$14.500</p>
+                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__brand">
+          <h3>BALBI <span>HOME</span></h3>
+          <p>¡El hogar de tus sueños!</p>
+        </div>
+        <div class="footer__info">
+          <h4>Información</h4>
+          <ul>
+            <li>📍 Belgrano 970, S.S. de Jujuy</li>
+            <li>🕐 Lun a Sáb de 9 a 21hs</li>
+          </ul>
+        </div>
+        <div class="footer__social">
+          <h4>Seguinos</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/balbihome_jujuy" target="_blank">Instagram</a></li>
+            <li><a href="https://www.facebook.com/share/18gMqwsBkf/" target="_blank">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 Balbi Home. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+  </body>
+</html>
