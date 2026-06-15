@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carrito — Balbi Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/carrito.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="navbar__container">
+        <a href="index.html" class="navbar__logo">
+          BALBI <span>HOME</span>
+        </a>
+
+        <nav class="navbar__nav">
+          <ul class="navbar__links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="carrito.html" class="active">Carrito</a></li>
+            <li><a href="login.html">Ingresar</a></li>
+          </ul>
+        </nav>
+
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ENCABEZADO -->
+    <section class="carrito__header">
+      <div class="section__container">
+        <h1 class="carrito__titulo">Carrito de Compras</h1>
+        <p class="carrito__subtitulo">Revisá los productos antes de finalizar tu compra</p>
+      </div>
+    </section>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="carrito__main">
+      <div class="section__container carrito__layout">
+        <!-- TABLA -->
+        <section class="carrito__contenido">
+          <h2 class="carrito__seccion-titulo">Productos agregados</h2>
+
+          <div class="carrito__tabla-wrapper">
+            <table class="carrito__tabla">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="carrito__producto">
+                      <span class="carrito__producto-img">📦</span>
+                      <div>
+                        <h3>Juego de Vajilla</h3>
+                        <p>Bazar</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>1</td>
+                  <td>$15.999</td>
+                  <td>$15.999</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="carrito__producto">
+                      <span class="carrito__producto-img">📦</span>
+                      <div>
+                        <h3>Licuadora</h3>
+                        <p>Electrodomésticos</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>1</td>
+                  <td>$29.999</td>
+                  <td>$29.999</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="carrito__producto">
+                      <span class="carrito__producto-img">📦</span>
+                      <div>
+                        <h3>Cortinas Blackout</h3>
+                        <p>Blanco</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>2</td>
+                  <td>$24.000</td>
+                  <td>$48.000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- RESUMEN -->
+        <aside class="carrito__resumen">
+          <h2>Resumen de compra</h2>
+
+          <div class="resumen__fila">
+            <span>Subtotal</span>
+            <strong>$93.998</strong>
+          </div>
+
+          <div class="resumen__fila">
+            <span>Envío</span>
+            <strong>Gratis</strong>
+          </div>
+
+          <div class="resumen__total">
+            <span>Total</span>
+            <strong>$93.998</strong>
+          </div>
+
+          <a href="checkout.html" class="btn btn--primary carrito__btn">Finalizar compra</a>
+          <a href="catalogo.html" class="btn btn--outline carrito__btn">Seguir comprando</a>
+        </aside>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__brand">
+          <h3>BALBI <span>HOME</span></h3>
+          <p>¡El hogar de tus sueños!</p>
+        </div>
+
+        <div class="footer__info">
+          <h4>Información</h4>
+          <ul>
+            <li>📍 Belgrano 970, S.S. de Jujuy</li>
+            <li>🕐 Lun a Sáb de 9 a 21hs</li>
+          </ul>
+        </div>
+
+        <div class="footer__social">
+          <h4>Seguinos</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/balbihome_jujuy" target="_blank">Instagram</a></li>
+            <li><a href="https://www.facebook.com/share/18gMqwsBkf/" target="_blank">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© 2026 Balbi Home. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </body>
+</html>
