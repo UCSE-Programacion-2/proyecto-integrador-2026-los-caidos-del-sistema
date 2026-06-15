@@ -1,0 +1,219 @@
+/* ========================================
+   PANEL DE ADMINISTRACIÓN — BALBI HOME
+   feat(ui-admin)
+   ======================================== */
+
+.admin__header {
+  background-color: var(--color-accent);
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  overflow: hidden;
+}
+
+.admin__titulo {
+  font-family: var(--font-primary);
+  font-size: var(--text-2xl);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-sm);
+  line-height: 1.2;
+}
+
+.admin__subtitulo {
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  color: var(--color-text-soft);
+}
+
+.admin__main {
+  background-color: var(--color-bg-soft);
+  padding: var(--spacing-xl) 0;
+  overflow: hidden;
+}
+
+.admin__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  min-width: 0;
+}
+
+.admin__form-card,
+.admin__tabla-card {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md);
+}
+
+.admin__form-card h2,
+.admin__tabla-card h2 {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.admin__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.admin__campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.admin__campo label {
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.admin__campo input,
+.admin__campo select,
+.admin__campo textarea {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+.admin__campo input:focus,
+.admin__campo select:focus,
+.admin__campo textarea:focus {
+  outline: 2px solid var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.admin__campo textarea {
+  resize: vertical;
+}
+
+.admin__btn {
+  width: 100%;
+  margin-top: var(--spacing-sm);
+}
+
+.admin__tabla-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.admin__tabla-header h2 {
+  margin-bottom: 0;
+}
+
+.admin__tabla-header span {
+  background-color: var(--color-accent);
+  color: var(--color-secondary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+}
+
+.admin__tabla-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+}
+
+.admin__tabla {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.admin__tabla th {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+  text-align: left;
+  padding: var(--spacing-sm);
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+}
+
+.admin__tabla td {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.admin__acciones {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.admin__acciones button {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-bg);
+  color: var(--color-secondary);
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.admin__acciones button:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .admin__header {
+    padding: var(--spacing-2xl) var(--spacing-xl);
+  }
+
+  .admin__titulo {
+    font-size: var(--text-3xl);
+  }
+
+  .admin__subtitulo {
+    font-size: var(--text-lg);
+  }
+
+  .admin__form-card,
+  .admin__tabla-card {
+    padding: var(--spacing-lg);
+  }
+
+  .admin__tabla-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .admin__layout {
+    grid-template-columns: 340px minmax(0, 1fr);
+    align-items: flex-start;
+  }
+
+  .admin__tabla th,
+  .admin__tabla td {
+    padding: var(--spacing-md);
+  }
+}

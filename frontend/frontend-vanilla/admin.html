@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración — Balbi Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/admin.css" />
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="navbar__container">
+        <a href="index.html" class="navbar__logo">BALBI <span>HOME</span></a>
+        <nav class="navbar__nav">
+          <ul class="navbar__links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="catalogo.html">Catálogo</a></li>
+            <li><a href="carrito.html">Carrito</a></li>
+            <li><a href="login.html">Ingresar</a></li>
+          </ul>
+        </nav>
+        <button class="navbar__hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </header>
+
+    <section class="admin__header">
+      <div class="section__container">
+        <h1 class="admin__titulo">Panel de Administración</h1>
+        <p class="admin__subtitulo">Gestión visual de productos de Balbi Home</p>
+      </div>
+    </section>
+
+    <main class="admin__main">
+      <div class="section__container admin__layout">
+        <section class="admin__form-card">
+          <h2>Crear producto</h2>
+
+          <form class="admin__form">
+            <div class="admin__campo">
+              <label for="nombre">Nombre del producto</label>
+              <input type="text" id="nombre" placeholder="Ej: Juego de Vajilla" />
+            </div>
+
+            <div class="admin__campo">
+              <label for="categoria">Categoría</label>
+              <select id="categoria">
+                <option>Bazar</option>
+                <option>Decoración</option>
+                <option>Blanco</option>
+                <option>Electrodomésticos</option>
+              </select>
+            </div>
+
+            <div class="admin__campo">
+              <label for="precio">Precio</label>
+              <input type="text" id="precio" placeholder="$15.999" />
+            </div>
+
+            <div class="admin__campo">
+              <label for="stock">Stock</label>
+              <input type="number" id="stock" placeholder="10" />
+            </div>
+
+            <div class="admin__campo">
+              <label for="descripcion">Descripción</label>
+              <textarea id="descripcion" rows="4" placeholder="Descripción breve del producto"></textarea>
+            </div>
+
+            <button type="button" class="btn btn--primary admin__btn">Guardar producto</button>
+          </form>
+        </section>
+
+        <section class="admin__tabla-card">
+          <div class="admin__tabla-header">
+            <h2>Productos registrados</h2>
+            <span>4 productos</span>
+          </div>
+
+          <div class="admin__tabla-wrapper">
+            <table class="admin__tabla">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th>Categoría</th>
+                  <th>Precio</th>
+                  <th>Stock</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Juego de Vajilla</td>
+                  <td>Bazar</td>
+                  <td>$15.999</td>
+                  <td>12</td>
+                  <td class="admin__acciones">
+                    <button>Ver</button>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Espejo Moderno</td>
+                  <td>Decoración</td>
+                  <td>$22.500</td>
+                  <td>8</td>
+                  <td class="admin__acciones">
+                    <button>Ver</button>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Juego de Sábanas</td>
+                  <td>Blanco</td>
+                  <td>$18.200</td>
+                  <td>15</td>
+                  <td class="admin__acciones">
+                    <button>Ver</button>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Licuadora</td>
+                  <td>Electrodomésticos</td>
+                  <td>$29.999</td>
+                  <td>6</td>
+                  <td class="admin__acciones">
+                    <button>Ver</button>
+                    <button>Editar</button>
+                    <button>Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer__container">
+        <div class="footer__brand">
+          <h3>BALBI <span>HOME</span></h3>
+          <p>¡El hogar de tus sueños!</p>
+        </div>
+        <div class="footer__info">
+          <h4>Información</h4>
+          <ul>
+            <li>📍 Belgrano 970, S.S. de Jujuy</li>
+            <li>🕐 Lun a Sáb de 9 a 21hs</li>
+          </ul>
+        </div>
+        <div class="footer__social">
+          <h4>Seguinos</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/balbihome_jujuy" target="_blank">Instagram</a></li>
+            <li><a href="https://www.facebook.com/share/18gMqwsBkf/" target="_blank">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>© 2026 Balbi Home. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+  </body>
+</html>
