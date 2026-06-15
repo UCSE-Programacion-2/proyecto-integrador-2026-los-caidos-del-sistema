@@ -1,0 +1,185 @@
+/* ========================================
+   CHECKOUT — BALBI HOME
+   feat/ui-checkout
+   ======================================== */
+
+.checkout {
+  background-color: var(--color-bg-soft);
+  padding-bottom: var(--spacing-2xl);
+}
+
+.checkout__header {
+  background: linear-gradient(135deg, var(--color-bg-dark) 0%, #3d1a1a 100%);
+  color: var(--color-text-light);
+  text-align: center;
+  padding: var(--spacing-2xl) var(--spacing-xl);
+}
+
+.checkout__header h1 {
+  font-family: var(--font-primary);
+  font-size: var(--text-4xl);
+  margin-bottom: var(--spacing-sm);
+}
+
+.checkout__header p {
+  color: #ccc;
+  font-size: var(--text-lg);
+}
+
+.checkout__container {
+  max-width: 1200px;
+  margin: var(--spacing-2xl) auto 0;
+  padding: 0 var(--spacing-xl);
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-2xl);
+}
+
+.checkout__form,
+.checkout__resumen {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-2xl);
+}
+
+.checkout__form h2,
+.checkout__resumen h2 {
+  font-family: var(--font-primary);
+  font-size: var(--text-2xl);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-xl);
+}
+
+.form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.form__group--full {
+  grid-column: 1 / -1;
+}
+
+.form__group label {
+  font-weight: 600;
+  color: var(--color-secondary);
+  font-size: var(--text-sm);
+}
+
+.form__group input,
+.form__group select {
+  padding: var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  outline: none;
+  transition: var(--transition);
+}
+
+.form__group input:focus,
+.form__group select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+}
+
+.form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-2xl);
+  flex-wrap: wrap;
+}
+
+.checkout__resumen {
+  align-self: start;
+}
+
+.resumen__item {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.resumen__item h3 {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.resumen__item p {
+  font-size: var(--text-sm);
+  color: var(--color-text-soft);
+}
+
+.resumen__item span {
+  font-weight: 700;
+  color: var(--color-primary);
+  white-space: nowrap;
+}
+
+.resumen__linea,
+.resumen__total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-md);
+  font-size: var(--text-base);
+}
+
+.resumen__linea span {
+  color: var(--color-text-soft);
+}
+
+.resumen__linea strong {
+  color: var(--color-secondary);
+}
+
+.resumen__total {
+  border-top: 2px solid var(--color-primary);
+  padding-top: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.resumen__total strong {
+  color: var(--color-primary);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .checkout__header h1 {
+    font-size: var(--text-3xl);
+  }
+
+  .checkout__container {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+  }
+
+  .form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form__actions {
+    flex-direction: column;
+  }
+
+  .form__actions .btn {
+    width: 100%;
+  }
+}
