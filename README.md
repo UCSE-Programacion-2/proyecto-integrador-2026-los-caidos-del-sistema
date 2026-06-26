@@ -1,5 +1,5 @@
 Tablero de GitHub Projects: [Ver Tablero](https://github.com/orgs/UCSE-Programacion-2/projects/34) 
-
+Video Sprint-1: [Ver Video](https://drive.google.com/file/d/10bVB7FOf-0jUOWL69lmlVWlyws2D_j94/view?usp=drivesdk)
 # Los Caídos del Sistema - Programación II 2026
 
 ## 👥 Integrantes
