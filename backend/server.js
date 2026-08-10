@@ -1,7 +1,8 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const express = require("express");
-const connectDB = require("./config/db");
+const express = require('express');
+const connectDB = require('./config/db');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -10,10 +11,14 @@ const PORT = process.env.PORT || 4000;
 // Conectar con MongoDB Atlas
 connectDB();
 
-// Ruta de prueba
-app.get("/", (req, res) => {
-  res.send("Hello World");
+// Middlewares
+app.use(express.json());
+
+// Rutas
+app.get('/', (req, res) => {
+  res.send('Hello World');
 });
+app.use('/api/auth', authRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => {
