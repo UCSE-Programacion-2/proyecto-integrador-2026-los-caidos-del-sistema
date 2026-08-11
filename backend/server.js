@@ -4,6 +4,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/cart', cartRoutes);
+app.use('/api/products', productRoutes);
 
 // Iniciar servidor
 app.listen(PORT, () => {
