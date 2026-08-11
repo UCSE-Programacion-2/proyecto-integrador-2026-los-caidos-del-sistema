@@ -1,0 +1,360 @@
+{
+  "info": {
+    "name": "Balbi Home API",
+    "description": "Colección de endpoints para la API REST de Balbi Home - Sprint 2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "POST - Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Lucas Perez\",\n  \"email\": \"lucas@test.com\",\n  \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Registra un nuevo usuario. Responde 201 si se crea correctamente, 400 si el email ya existe o faltan campos."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"lucas@test.com\",\n  \"password\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Inicia sesión con email y password. Responde 200 con datos del usuario, 401 si las credenciales son inválidas."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Register (datos inválidos)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"lucas@test.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/auth/register",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Prueba de validación: falta name y password. Debe responder 400 Bad Request."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Login (credenciales inválidas)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"lucas@test.com\",\n  \"password\": \"wrongpassword\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/auth/login",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Prueba de credenciales incorrectas. Debe responder 401 Unauthorized."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Productos",
+      "item": [
+        {
+          "name": "GET - Listar productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/products",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "products"]
+            },
+            "description": "Obtiene el listado completo de productos. Responde 200 con array de productos."
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Listar productos por categoría",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/products?category=Bazar",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "products"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Bazar"
+                }
+              ]
+            },
+            "description": "Filtra productos por categoría. Categorías: Bazar, Decoración, Blanco, Electro."
+          },
+          "response": []
+        },
+        {
+          "name": "GET - Detalle de producto",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/products/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "products", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "REEMPLAZAR_CON_ID_REAL"
+                }
+              ]
+            },
+            "description": "Obtiene el detalle de un producto por su ID. Responde 200 o 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Crear producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Juego de Vajilla\",\n  \"price\": 15999,\n  \"category\": \"Bazar\",\n  \"description\": \"Juego de vajilla para 6 personas\",\n  \"image\": \"https://via.placeholder.com/400\",\n  \"stock\": 10\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/products",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "products"]
+            },
+            "description": "Crea un nuevo producto. Responde 201 si se crea correctamente."
+          },
+          "response": []
+        },
+        {
+          "name": "PUT - Editar producto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 18999,\n  \"stock\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/products/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "products", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "REEMPLAZAR_CON_ID_REAL"
+                }
+              ]
+            },
+            "description": "Edita un producto por su ID. Responde 200 o 404 si no existe."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Borrar producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/products/:id",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "products", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "REEMPLAZAR_CON_ID_REAL"
+                }
+              ]
+            },
+            "description": "Elimina un producto por su ID. Responde 200 o 404 si no existe."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Carrito",
+      "item": [
+        {
+          "name": "GET - Obtener carrito",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/cart",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "cart"]
+            },
+            "description": "Obtiene el carrito de compras. Responde 200 con los items del carrito."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Agregar item al carrito",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"REEMPLAZAR_CON_ID_REAL\",\n  \"quantity\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/cart/items",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "cart", "items"]
+            },
+            "description": "Agrega un item al carrito. Responde 200 o 201."
+          },
+          "response": []
+        },
+        {
+          "name": "DELETE - Eliminar item del carrito",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:4000/api/cart/items/:productId",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "4000",
+              "path": ["api", "cart", "items", ":productId"],
+              "variable": [
+                {
+                  "key": "productId",
+                  "value": "REEMPLAZAR_CON_ID_REAL"
+                }
+              ]
+            },
+            "description": "Elimina un item del carrito por productId. Responde 200 o 404."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
