@@ -80,6 +80,13 @@ ul {
   border-bottom: 2px solid var(--color-primary);
 }
 
+.navbar__usuario {
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
 .navbar__hamburger {
   display: none;
   flex-direction: column;
