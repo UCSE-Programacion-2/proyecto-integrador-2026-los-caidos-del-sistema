@@ -101,6 +101,14 @@
   color: var(--color-primary-dark);
 }
 
+.login__mensaje {
+  min-height: 1.2em;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-primary);
+  text-align: center;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .login__header {
