@@ -43,32 +43,40 @@
     </header>
 
     <!-- DETALLE PRODUCTO -->
-    <main class="detalle">
-      <div class="detalle__container">
-        <div class="detalle__imagen">
-          <span>📦</span>
-        </div>
+<main class="detalle">
+  <div class="detalle__container" id="detalle-container">
 
-        <section class="detalle__info">
-          <span class="detalle__categoria">Bazar</span>
+    <div class="detalle__imagen" id="producto-imagen">
+      <span>📦</span>
+    </div>
 
-          <h1 class="detalle__titulo">Juego de Vajilla</h1>
+    <section class="detalle__info">
 
-          <p class="detalle__descripcion">
-            Juego de vajilla moderno ideal para el uso diario o para ocasiones
-            especiales. Diseño simple, elegante y fácil de combinar con otros
-            artículos del hogar.
-          </p>
+      <span class="detalle__categoria" id="producto-categoria">
+        Cargando...
+      </span>
 
-          <div class="detalle__precio">$15.999</div>
+      <h1 class="detalle__titulo" id="producto-nombre">
+        Cargando producto...
+      </h1>
 
-          <div class="detalle__acciones">
-            <a href="carrito.html" class="btn btn--primary">Agregar al Carrito</a>
-            <a href="catalogo.html" class="btn btn--outline">Volver al Catálogo</a>
-          </div>
-        </section>
+      <p class="detalle__descripcion" id="producto-descripcion"></p>
+
+      <div class="detalle__precio" id="producto-precio"></div>
+
+      <div class="detalle__acciones">
+        <a href="carrito.html" class="btn btn--primary">
+          Agregar al Carrito
+        </a>
+
+        <a href="catalogo.html" class="btn btn--outline">
+          Volver al Catálogo
+        </a>
       </div>
-    </main>
+
+    </section>
+  </div>
+</main>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -108,5 +116,6 @@
       </div>
     </footer>
     <script src="js/navbar.js"></script>
+    <script src="js/product-detail.js"></script>
   </body>
 </html>
