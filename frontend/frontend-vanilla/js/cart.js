@@ -1,6 +1,39 @@
 
-// Clave que utilizaremos para guardar el carrito
+// Clave utilizada para guardar el carrito
 const CART_STORAGE_KEY = 'balbi_cart';
+
+// Mostrar un mensaje comprensible cuando ocurre un error
+const mostrarErrorCarrito = (mensaje) => {
+  console.error(mensaje);
+
+  const tablaCarrito = document.getElementById('carrito-productos');
+
+  if (tablaCarrito) {
+    let aviso = document.getElementById('carrito-error');
+
+    if (!aviso) {
+      aviso = document.createElement('p');
+      aviso.id = 'carrito-error';
+      aviso.setAttribute('role', 'alert');
+      aviso.style.color = '#c93324';
+      aviso.style.fontWeight = '600';
+      aviso.style.padding = '12px';
+
+      const tabla = tablaCarrito.closest('table');
+
+      if (tabla) {
+        tabla.before(aviso);
+      } else {
+        tablaCarrito.before(aviso);
+      }
+    }
+
+    aviso.textContent = mensaje;
+  } else {
+    // En el detalle del producto, informar mediante un aviso
+    alert(mensaje);
+  }
+};
 
 // Obtener los productos guardados en el carrito
 const obtenerCarrito = () => {
@@ -11,21 +44,47 @@ const obtenerCarrito = () => {
       ? JSON.parse(carritoGuardado)
       : [];
 
-    return Array.isArray(carrito) ? carrito : [];
+    if (!Array.isArray(carrito)) {
+      throw new Error('El formato del carrito no es válido');
+    }
+
+    return carrito;
   } catch (error) {
     console.error('Error al recuperar el carrito:', error);
-    return [];
+
+    mostrarErrorCarrito(
+      'No pudimos recuperar tu carrito. Intentá recargar la página.'
+    );
+
+    // null permite distinguir un error de un carrito vacío
+    return null;
   }
 };
 
 // Guardar los productos del carrito
 const guardarCarrito = (carrito) => {
-  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(carrito));
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(carrito));
+    return true;
+  } catch (error) {
+    console.error('Error al guardar el carrito:', error);
+
+    mostrarErrorCarrito(
+      'No pudimos guardar los cambios del carrito. Intentá nuevamente.'
+    );
+
+    return false;
+  }
 };
 
 // Agregar un producto al carrito
 const agregarAlCarrito = (producto) => {
   const carrito = obtenerCarrito();
+
+  // No modificar el carrito si falló la lectura
+  if (carrito === null) {
+    return false;
+  }
 
   // Buscar si el producto ya existe
   const productoExistente = carrito.find(
@@ -33,10 +92,8 @@ const agregarAlCarrito = (producto) => {
   );
 
   if (productoExistente) {
-    // Si ya existe, aumentar su cantidad
     productoExistente.quantity += 1;
   } else {
-    // Si no existe, agregarlo con cantidad 1
     carrito.push({
       id: producto._id,
       name: producto.name,
@@ -47,14 +104,18 @@ const agregarAlCarrito = (producto) => {
     });
   }
 
-  guardarCarrito(carrito);
+  // Informar si el guardado fue exitoso
+  return guardarCarrito(carrito);
 };
 
 // Aumentar o disminuir la cantidad de un producto
 const cambiarCantidad = (productoId, cambio) => {
   const carrito = obtenerCarrito();
 
-  // Buscar el producto seleccionado
+  if (carrito === null) {
+    return;
+  }
+
   const producto = carrito.find(
     (item) => item.id === productoId
   );
@@ -63,7 +124,6 @@ const cambiarCantidad = (productoId, cambio) => {
     return;
   }
 
-  // Calcular la nueva cantidad
   const nuevaCantidad = producto.quantity + cambio;
 
   // No permitir cantidades menores a 1
@@ -71,50 +131,90 @@ const cambiarCantidad = (productoId, cambio) => {
     return;
   }
 
-  // Actualizar la cantidad
   producto.quantity = nuevaCantidad;
 
-  // Guardar los cambios
-  guardarCarrito(carrito);
-
-  // Volver a mostrar el carrito actualizado
-  mostrarCarrito();
+  // Actualizar la pantalla solamente si se pudo guardar
+  if (guardarCarrito(carrito)) {
+    mostrarCarrito();
+  }
 };
 
 // Eliminar un producto del carrito
 const eliminarDelCarrito = (productoId) => {
   const carrito = obtenerCarrito();
 
-  // Conservar todos los productos excepto el seleccionado
+  if (carrito === null) {
+    return;
+  }
+
   const carritoActualizado = carrito.filter(
     (item) => item.id !== productoId
   );
 
-  // Guardar el carrito sin ese producto
-  guardarCarrito(carritoActualizado);
-
-  // Actualizar la tabla y el resumen
-  mostrarCarrito();
+  // Actualizar la pantalla solamente si se pudo guardar
+  if (guardarCarrito(carritoActualizado)) {
+    mostrarCarrito();
+  }
 };
 
 // Mostrar los productos guardados en el carrito
 const mostrarCarrito = () => {
   const tablaCarrito = document.getElementById('carrito-productos');
 
-  // Si no estamos en la página del carrito, no hacer nada
+  // No ejecutar esta función fuera de carrito.html
   if (!tablaCarrito) {
     return;
   }
 
   const carrito = obtenerCarrito();
 
-  // Limpiar la tabla antes de dibujarla nuevamente
+  // Si falló la lectura, no mostrar datos incorrectos
+  if (carrito === null) {
+    tablaCarrito.innerHTML = '';
+
+    const filaError = document.createElement('tr');
+    const celdaError = document.createElement('td');
+
+    celdaError.colSpan = 4;
+    celdaError.textContent =
+      'No se pudieron cargar los productos del carrito.';
+    celdaError.style.textAlign = 'center';
+    celdaError.style.padding = '24px';
+
+    filaError.appendChild(celdaError);
+    tablaCarrito.appendChild(filaError);
+
+    const botonFinalizar = document.querySelector(
+      '.carrito__resumen a[href="checkout.html"]'
+    );
+
+    if (botonFinalizar) {
+      botonFinalizar.style.opacity = '0.5';
+      botonFinalizar.style.cursor = 'not-allowed';
+      botonFinalizar.title =
+        'No se pudo recuperar el carrito';
+
+      botonFinalizar.onclick = (evento) => {
+        evento.preventDefault();
+      };
+    }
+
+    return;
+  }
+
+  // Eliminar un aviso anterior si ya se recuperó correctamente
+  const avisoAnterior = document.getElementById('carrito-error');
+
+  if (avisoAnterior) {
+    avisoAnterior.remove();
+  }
+
+  // Limpiar la tabla
   tablaCarrito.innerHTML = '';
 
-  // Acumular el total de la compra
   let total = 0;
 
-  // Mostrar un mensaje cuando el carrito esté vacío
+  // Mostrar mensaje cuando el carrito esté vacío
   if (carrito.length === 0) {
     const filaVacia = document.createElement('tr');
     const celdaVacia = document.createElement('td');
@@ -129,17 +229,13 @@ const mostrarCarrito = () => {
     tablaCarrito.appendChild(filaVacia);
   }
 
-  // Recorrer los productos del carrito
+  // Mostrar los productos seleccionados
   carrito.forEach((producto) => {
     const fila = document.createElement('tr');
 
-    // Calcular el subtotal del producto
     const subtotal = producto.price * producto.quantity;
-
-    // Sumar al total general
     total += subtotal;
 
-    // Crear la fila con botones de cantidad y eliminación
     fila.innerHTML = `
       <td>
         <div class="carrito__producto">
@@ -193,33 +289,31 @@ const mostrarCarrito = () => {
     fila.querySelector('p').textContent =
       producto.category || 'Sin categoría';
 
-    // Botón para disminuir la cantidad
+    // Disminuir cantidad
     fila.querySelector('[data-accion="disminuir"]')
       .addEventListener('click', () => {
         cambiarCantidad(producto.id, -1);
       });
 
-    // Botón para aumentar la cantidad
+    // Aumentar cantidad
     fila.querySelector('[data-accion="aumentar"]')
       .addEventListener('click', () => {
         cambiarCantidad(producto.id, 1);
       });
 
-    // Botón para eliminar el producto
+    // Eliminar producto
     fila.querySelector('[data-accion="eliminar"]')
       .addEventListener('click', () => {
         eliminarDelCarrito(producto.id);
       });
 
-    // Agregar la fila a la tabla
     tablaCarrito.appendChild(fila);
   });
 
-  // Buscar los elementos del resumen de compra
+  // Actualizar el resumen de compra
   const subtotalElemento = document.getElementById('carrito-subtotal');
   const totalElemento = document.getElementById('carrito-total');
 
-  // Mostrar los importes actualizados
   if (subtotalElemento) {
     subtotalElemento.textContent =
       `$${total.toLocaleString('es-AR')}`;
@@ -230,7 +324,7 @@ const mostrarCarrito = () => {
       `$${total.toLocaleString('es-AR')}`;
   }
 
-  // Controlar el botón de finalizar compra
+  // Controlar el botón Finalizar compra
   const botonFinalizar = document.querySelector(
     '.carrito__resumen a[href="checkout.html"]'
   );
@@ -238,17 +332,16 @@ const mostrarCarrito = () => {
   if (botonFinalizar) {
     const carritoVacio = carrito.length === 0;
 
-    // Cambiar su apariencia según haya productos o no
-    botonFinalizar.style.opacity = carritoVacio ? '0.5' : '1';
+    botonFinalizar.style.opacity =
+      carritoVacio ? '0.5' : '1';
+
     botonFinalizar.style.cursor =
       carritoVacio ? 'not-allowed' : 'pointer';
 
-    // Informar al usuario por qué no puede continuar
     botonFinalizar.title = carritoVacio
       ? 'Agregá productos al carrito para continuar'
       : '';
 
-    // Evitar navegar al checkout cuando el carrito esté vacío
     botonFinalizar.onclick = (evento) => {
       if (carritoVacio) {
         evento.preventDefault();

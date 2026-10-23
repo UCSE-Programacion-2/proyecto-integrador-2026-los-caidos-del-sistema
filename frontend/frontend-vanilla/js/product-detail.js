@@ -1,3 +1,4 @@
+
 // URL de la API de productos
 const API_PRODUCT_DETAIL_URL = 'http://localhost:4000/api/products';
 
@@ -37,22 +38,27 @@ const cargarDetalleProducto = async () => {
       throw new Error('El producto no existe');
     }
 
-    // Obtener el botón Agregar al Carrito
+    // Obtener el botón Agregar al carrito
     const botonAgregar = document.getElementById('agregar-carrito');
 
-    // Detectar cuando el usuario hace clic
     if (botonAgregar) {
       botonAgregar.addEventListener('click', () => {
-        agregarAlCarrito(producto);
+        // Comprobar si el producto se guardó correctamente
+        const guardadoExitoso = agregarAlCarrito(producto);
 
-        // Redirigir al usuario al carrito
-        window.location.href = 'carrito.html';
+        // Redirigir solamente cuando el guardado fue exitoso
+        if (guardadoExitoso) {
+          window.location.href = 'carrito.html';
+        }
       });
     }
 
     // Mostrar los datos del producto
-    productoCategoria.textContent = producto.category || 'Sin categoría';
+    productoCategoria.textContent =
+      producto.category || 'Sin categoría';
+
     productoNombre.textContent = producto.name;
+
     productoDescripcion.textContent =
       producto.description || 'Sin descripción disponible';
 
@@ -74,10 +80,14 @@ const cargarDetalleProducto = async () => {
   } catch (error) {
     console.error('Error al cargar el producto:', error);
 
-    productoNombre.textContent = 'No se pudo cargar el producto';
+    productoNombre.textContent =
+      'No se pudo cargar el producto';
+
     productoCategoria.textContent = '';
+
     productoDescripcion.textContent =
       'Verificá que el producto exista e intentá nuevamente.';
+
     productoPrecio.textContent = '';
     productoImagen.textContent = '📦';
 

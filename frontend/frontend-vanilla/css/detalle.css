@@ -97,3 +97,83 @@
     width: 100%;
   }
 }
+
+
+/* ========================================
+   BOTONES DEL DETALLE DEL PRODUCTO
+   ======================================== */
+
+.detalle__acciones .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Botón principal: Agregar al carrito */
+.detalle__acciones .btn--primary {
+  background-color: #c93324;
+  border-color: #c93324;
+  color: #ffffff;
+}
+
+.detalle__acciones .btn--primary:hover {
+  background-color: #a8291d;
+  border-color: #a8291d;
+  transform: translateY(-2px);
+}
+
+/* Botón secundario: Volver al catálogo */
+.detalle__acciones .btn--outline {
+  background-color: #ffffff;
+  border-color: #c93324;
+  color: #c93324;
+}
+
+.detalle__acciones .btn--outline:hover {
+  background-color: #fff1ef;
+  transform: translateY(-2px);
+}
+
+/* Accesibilidad al navegar con teclado */
+.detalle__acciones .btn:focus-visible {
+  outline: 3px solid #c93324;
+  outline-offset: 3px;
+}
+
+/* Adaptación a celulares */
+@media (max-width: 768px) {
+  .detalle__acciones .btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+
+/* ========================================
+   FOOTER AL FINAL DE LA PÁGINA
+   Solo para detalle de producto
+   ======================================== */
+
+body:has(> .detalle) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.detalle {
+  flex: 1;
+}
