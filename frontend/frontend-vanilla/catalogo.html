@@ -86,7 +86,7 @@
         <section class="catalogo__productos">
 
           <div class="productos__barra">
-            <p class="productos__total">Mostrando <strong>8</strong> productos</p>
+            <p class="productos__total">Mostrando <strong id="productos-total">0</strong> productos</p>
             <div class="productos__ordenar">
               <label for="orden">Ordenar por:</label>
               <select id="orden" class="productos__select">
@@ -98,88 +98,8 @@
             </div>
           </div>
 
-          <div class="catalogo__grid">
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Bazar</span>
-                <h3 class="producto__nombre">Juego de Vajilla</h3>
-                <p class="producto__precio">$15.999</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Decoración</span>
-                <h3 class="producto__nombre">Espejo Moderno</h3>
-                <p class="producto__precio">$22.500</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Blanco</span>
-                <h3 class="producto__nombre">Juego de Sábanas</h3>
-                <p class="producto__precio">$18.200</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Electrodomésticos</span>
-                <h3 class="producto__nombre">Licuadora</h3>
-                <p class="producto__precio">$29.999</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Bazar</span>
-                <h3 class="producto__nombre">Set de Cuchillos</h3>
-                <p class="producto__precio">$12.300</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Decoración</span>
-                <h3 class="producto__nombre">Cuadro Abstracto</h3>
-                <p class="producto__precio">$9.800</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Blanco</span>
-                <h3 class="producto__nombre">Cortinas Blackout</h3>
-                <p class="producto__precio">$24.000</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
-            <div class="producto__card">
-              <div class="producto__img"><span>📦</span></div>
-              <div class="producto__info">
-                <span class="producto__categoria">Electrodomésticos</span>
-                <h3 class="producto__nombre">Tostadora</h3>
-                <p class="producto__precio">$14.500</p>
-                <a href="detalle.html" class="btn btn--outline">Ver Detalle</a>
-              </div>
-            </div>
-
+          <div class="catalogo__grid" id="productos-container">
+            <p>Cargando productos...</p>
           </div>
         </section>
 
@@ -214,5 +134,6 @@
     </footer>
 
     <script src="js/navbar.js"></script>
+    <script src="js/products.js"></script>
   </body>
 </html>

@@ -4,6 +4,9 @@ const API_PRODUCTS_URL = 'http://localhost:4000/api/products';
 // Contenedor donde se mostrarán los productos
 const productosContainer = document.getElementById('productos-container');
 
+// Contador de productos (solo existe en catalogo.html)
+const productosTotal = document.getElementById('productos-total');
+
 // Función para cargar los productos desde la API
 const cargarProductos = async () => {
   try {
@@ -18,6 +21,11 @@ const cargarProductos = async () => {
 
     // Limpiamos el mensaje "Cargando productos..."
     productosContainer.innerHTML = '';
+
+    // Actualizamos el contador del catálogo
+    if (productosTotal) {
+      productosTotal.textContent = productos ? productos.length : 0;
+    }
 
     // Verificamos si hay productos disponibles
     if (!productos || productos.length === 0) {
