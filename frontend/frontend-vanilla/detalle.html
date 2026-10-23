@@ -64,13 +64,16 @@
 
       <div class="detalle__precio" id="producto-precio"></div>
 
+      
       <div class="detalle__acciones">
-        <a href="carrito.html" class="btn btn--primary">
-          Agregar al Carrito
-        </a>
+        <button type="button" id="agregar-carrito" class="btn btn--primary">
+          <span aria-hidden="true">🛒</span>
+          Agregar al carrito
+        </button>
 
         <a href="catalogo.html" class="btn btn--outline">
-          Volver al Catálogo
+          <span aria-hidden="true">←</span>
+          Volver al catálogo
         </a>
       </div>
 
@@ -116,6 +119,7 @@
       </div>
     </footer>
     <script src="js/navbar.js"></script>
+    <script src="js/cart.js"></script>
     <script src="js/product-detail.js"></script>
   </body>
 </html>
