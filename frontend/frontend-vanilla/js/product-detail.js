@@ -37,6 +37,19 @@ const cargarDetalleProducto = async () => {
       throw new Error('El producto no existe');
     }
 
+    // Obtener el botón Agregar al Carrito
+    const botonAgregar = document.getElementById('agregar-carrito');
+
+    // Detectar cuando el usuario hace clic
+    if (botonAgregar) {
+      botonAgregar.addEventListener('click', () => {
+        agregarAlCarrito(producto);
+
+        // Redirigir al usuario al carrito
+        window.location.href = 'carrito.html';
+      });
+    }
+
     // Mostrar los datos del producto
     productoCategoria.textContent = producto.category || 'Sin categoría';
     productoNombre.textContent = producto.name;

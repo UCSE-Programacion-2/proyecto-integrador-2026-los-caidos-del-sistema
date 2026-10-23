@@ -64,51 +64,7 @@
                 </tr>
               </thead>
 
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="carrito__producto">
-                      <span class="carrito__producto-img">📦</span>
-                      <div>
-                        <h3>Juego de Vajilla</h3>
-                        <p>Bazar</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>1</td>
-                  <td>$15.999</td>
-                  <td>$15.999</td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <div class="carrito__producto">
-                      <span class="carrito__producto-img">📦</span>
-                      <div>
-                        <h3>Licuadora</h3>
-                        <p>Electrodomésticos</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>1</td>
-                  <td>$29.999</td>
-                  <td>$29.999</td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <div class="carrito__producto">
-                      <span class="carrito__producto-img">📦</span>
-                      <div>
-                        <h3>Cortinas Blackout</h3>
-                        <p>Blanco</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td>2</td>
-                  <td>$24.000</td>
-                  <td>$48.000</td>
-                </tr>
+              <tbody id="carrito-productos">
               </tbody>
             </table>
           </div>
@@ -119,9 +75,9 @@
           <h2>Resumen de compra</h2>
 
           <div class="resumen__fila">
-            <span>Subtotal</span>
-            <strong>$93.998</strong>
-          </div>
+  <span>Subtotal</span>
+  <strong id="carrito-subtotal">$0</strong>
+</div>
 
           <div class="resumen__fila">
             <span>Envío</span>
@@ -130,7 +86,7 @@
 
           <div class="resumen__total">
             <span>Total</span>
-            <strong>$93.998</strong>
+            <strong id="carrito-total">$0</strong>
           </div>
 
           <a href="checkout.html" class="btn btn--primary carrito__btn">Finalizar compra</a>
@@ -169,5 +125,6 @@
       </div>
     </footer>
     <script src="js/navbar.js"></script>
+    <script src="js/cart.js"></script>
   </body>
 </html>

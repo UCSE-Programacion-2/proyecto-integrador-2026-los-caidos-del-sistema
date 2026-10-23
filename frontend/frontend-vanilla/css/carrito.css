@@ -250,3 +250,100 @@
     min-width: 580px;
   }
 }
+
+
+/* =========================================
+   CONTROLES DEL CARRITO
+   ========================================= */
+
+/* Espaciado de las celdas */
+.carrito__tabla th,
+.carrito__tabla td {
+  padding: 18px 20px;
+  vertical-align: middle;
+}
+
+/* Contenedor de los botones de cantidad */
+.carrito__cantidad {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 5px;
+  background-color: #f8f5f2;
+  border: 1px solid #e8ded7;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+/* Botones + y - */
+.carrito__cantidad-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 7px;
+  background-color: #ffffff;
+  color: #b93629;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.carrito__cantidad-btn:hover {
+  background-color: #b93629;
+  color: #ffffff;
+}
+
+/* Número de unidades */
+.carrito__cantidad span {
+  min-width: 20px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* Subtotal y botón de eliminar */
+.carrito__subtotal-producto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  white-space: nowrap;
+}
+
+/* Botón eliminar */
+.carrito__eliminar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid #f0d8d4;
+  border-radius: 8px;
+  background-color: #fff7f6;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.carrito__eliminar-btn:hover {
+  background-color: #f5d8d4;
+}
+
+/* Evitar que la tabla se comprima demasiado */
+.carrito__tabla {
+  min-width: 680px;
+}
+
+/* Desplazamiento horizontal en pantallas pequeñas */
+.carrito__tabla-wrapper {
+  overflow-x: auto;
+}
