@@ -183,3 +183,105 @@
     width: 100%;
   }
 }
+
+
+/* ========================================
+   MODAL DE CHECKOUT — BALBI HOME
+   ======================================== */
+
+/* Fondo oscuro detrás de la ventana */
+.checkout-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+
+/* Ocultar el modal cuando no se utiliza */
+.checkout-modal[hidden] {
+  display: none;
+}
+
+/* Ventana del mensaje */
+.checkout-modal__contenido {
+  width: 100%;
+  max-width: 420px;
+  padding: 36px 30px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Ícono circular */
+.checkout-modal__icono {
+  width: 68px;
+  height: 68px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #fff1ef;
+  color: var(--color-primary);
+  font-size: 36px;
+}
+
+/* Título */
+.checkout-modal__titulo {
+  font-family: var(--font-primary);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  margin-bottom: 12px;
+}
+
+/* Descripción */
+.checkout-modal__mensaje {
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-soft);
+  margin-bottom: 26px;
+  white-space: pre-line;
+}
+
+/* Botón */
+.checkout-modal__boton {
+  width: 100%;
+  padding: 14px 20px;
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.checkout-modal__boton:hover {
+  background-color: #a8291d;
+}
+
+.checkout-modal__boton:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
+/* Adaptación a celulares */
+@media (max-width: 480px) {
+  .checkout-modal__contenido {
+    padding: 28px 20px;
+  }
+
+  .checkout-modal__titulo {
+    font-size: 21px;
+  }
+}
