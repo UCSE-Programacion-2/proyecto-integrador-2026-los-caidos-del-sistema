@@ -95,44 +95,38 @@
 
           <div class="form__actions">
             <a href="carrito.html" class="btn btn--outline">Volver al Carrito</a>
-            <button type="button" class="btn btn--primary">Confirmar Pedido</button>
+            <button
+              type="button"
+              id="confirmar-pedido"
+              class="btn btn--primary"
+            >
+              Confirmar Pedido
+            </button>
           </div>
         </form>
 
         <aside class="checkout__resumen">
           <h2>Resumen del pedido</h2>
 
-          <div class="resumen__item">
-            <div>
-              <h3>Juego de Vajilla</h3>
-              <p>Cantidad: 1</p>
-            </div>
-            <span>$15.999</span>
-          </div>
-
-          <div class="resumen__item">
-            <div>
-              <h3>Tostadora</h3>
-              <p>Cantidad: 1</p>
-            </div>
-            <span>$14.500</span>
-          </div>
+          <!-- Productos cargados dinámicamente desde el carrito -->
+          <div id="checkout-productos"></div>
 
           <div class="resumen__linea">
             <span>Subtotal</span>
-            <strong>$30.499</strong>
+            <strong id="checkout-subtotal">$0</strong>
           </div>
 
           <div class="resumen__linea">
             <span>Envío</span>
-            <strong>$2.000</strong>
+            <strong id="checkout-envio">Gratis</strong>
           </div>
 
           <div class="resumen__total">
             <span>Total</span>
-            <strong>$32.499</strong>
+            <strong id="checkout-total">$0</strong>
           </div>
         </aside>
+
       </section>
     </main>
 
@@ -165,6 +159,42 @@
         <p>© 2026 Balbi Home. Todos los derechos reservados.</p>
       </div>
     </footer>
+<!-- MODAL DE MENSAJES DEL CHECKOUT -->
+    <div
+      class="checkout-modal"
+      id="checkout-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="checkout-modal-titulo"
+      aria-describedby="checkout-modal-mensaje"
+      hidden
+    >
+      <div class="checkout-modal__contenido">
+
+        <div class="checkout-modal__icono" id="checkout-modal-icono"
+            aria-hidden="true">
+          ✓
+        </div>
+
+        <h2 class="checkout-modal__titulo" id="checkout-modal-titulo">
+          ¡Pedido confirmado!
+        </h2>
+
+        <p class="checkout-modal__mensaje" id="checkout-modal-mensaje">
+          Tu pedido fue confirmado en esta demostración.
+        </p>
+
+        <button
+          type="button"
+          class="checkout-modal__boton"
+          id="checkout-modal-boton"
+        >
+          Aceptar
+        </button>
+
+      </div>
+    </div>
     <script src="js/navbar.js"></script>
+    <script src="js/checkout.js"></script>
   </body>
 </html>
