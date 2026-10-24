@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -36,55 +37,119 @@
     <section class="admin__header">
       <div class="section__container">
         <h1 class="admin__titulo">Panel de Administración</h1>
-        <p class="admin__subtitulo">Gestión visual de productos de Balbi Home</p>
+        <p class="admin__subtitulo">Gestión de productos de Balbi Home</p>
       </div>
     </section>
 
     <main class="admin__main">
       <div class="section__container admin__layout">
-        <section class="admin__form-card">
-          <h2>Crear producto</h2>
 
-          <form class="admin__form">
+        <section class="admin__form-card">
+          <h2 id="admin-form-titulo">Crear producto</h2>
+
+          <form class="admin__form" id="admin-form">
+
             <div class="admin__campo">
               <label for="nombre">Nombre del producto</label>
-              <input type="text" id="nombre" placeholder="Ej: Juego de Vajilla" />
+              <input
+                type="text"
+                id="nombre"
+                placeholder="Ej: Juego de Vajilla"
+                required
+              />
             </div>
 
             <div class="admin__campo">
               <label for="categoria">Categoría</label>
-              <select id="categoria">
-                <option>Bazar</option>
-                <option>Decoración</option>
-                <option>Blanco</option>
-                <option>Electrodomésticos</option>
+              <select id="categoria" required>
+                <option value="Bazar">Bazar</option>
+                <option value="Decoración">Decoración</option>
+                <option value="Blanco">Blanco</option>
+                <option value="Electrodomésticos">Electrodomésticos</option>
               </select>
             </div>
 
             <div class="admin__campo">
               <label for="precio">Precio</label>
-              <input type="text" id="precio" placeholder="$15.999" />
+              <input
+                type="number"
+                id="precio"
+                min="0"
+                step="0.01"
+                placeholder="15999"
+                required
+              />
             </div>
 
             <div class="admin__campo">
               <label for="stock">Stock</label>
-              <input type="number" id="stock" placeholder="10" />
+              <input
+                type="number"
+                id="stock"
+                min="0"
+                step="1"
+                placeholder="10"
+                required
+              />
             </div>
 
             <div class="admin__campo">
               <label for="descripcion">Descripción</label>
-              <textarea id="descripcion" rows="4" placeholder="Descripción breve del producto"></textarea>
+              <textarea
+                id="descripcion"
+                rows="4"
+                placeholder="Descripción breve del producto"
+                required
+              ></textarea>
             </div>
 
-            <button type="button" class="btn btn--primary admin__btn">Guardar producto</button>
+            <div class="admin__campo">
+              <label for="imagen">URL de la imagen (opcional)</label>
+              <input
+                type="url"
+                id="imagen"
+                placeholder="https://ejemplo.com/producto.jpg"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn--primary admin__btn"
+              id="admin-guardar"
+            >
+              Guardar producto
+            </button>
+
+            <button
+              type="button"
+              class="btn"
+              id="admin-cancelar"
+              hidden
+            >
+              Cancelar edición
+            </button>
+
+            <p
+              id="admin-form-mensaje"
+              role="status"
+              aria-live="polite"
+            ></p>
           </form>
         </section>
 
         <section class="admin__tabla-card">
           <div class="admin__tabla-header">
             <h2>Productos registrados</h2>
-            <span>4 productos</span>
+            <span id="admin-total">0 productos</span>
           </div>
+
+          <p
+            id="admin-tabla-mensaje"
+            role="status"
+            aria-live="polite"
+          >
+            Cargando productos...
+          </p>
 
           <div class="admin__tabla-wrapper">
             <table class="admin__tabla">
@@ -97,55 +162,14 @@
                   <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>Juego de Vajilla</td>
-                  <td>Bazar</td>
-                  <td>$15.999</td>
-                  <td>12</td>
-                  <td class="admin__acciones">
-                    <button>Ver</button>
-                    <button>Editar</button>
-                    <button>Eliminar</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Espejo Moderno</td>
-                  <td>Decoración</td>
-                  <td>$22.500</td>
-                  <td>8</td>
-                  <td class="admin__acciones">
-                    <button>Ver</button>
-                    <button>Editar</button>
-                    <button>Eliminar</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Juego de Sábanas</td>
-                  <td>Blanco</td>
-                  <td>$18.200</td>
-                  <td>15</td>
-                  <td class="admin__acciones">
-                    <button>Ver</button>
-                    <button>Editar</button>
-                    <button>Eliminar</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Licuadora</td>
-                  <td>Electrodomésticos</td>
-                  <td>$29.999</td>
-                  <td>6</td>
-                  <td class="admin__acciones">
-                    <button>Ver</button>
-                    <button>Editar</button>
-                    <button>Eliminar</button>
-                  </td>
-                </tr>
+
+              <tbody id="admin-productos">
+                <!-- Los productos se cargan desde la API -->
               </tbody>
             </table>
           </div>
         </section>
+
       </div>
     </main>
 
@@ -155,6 +179,7 @@
           <h3>BALBI <span>HOME</span></h3>
           <p>¡El hogar de tus sueños!</p>
         </div>
+
         <div class="footer__info">
           <h4>Información</h4>
           <ul>
@@ -162,18 +187,96 @@
             <li>🕐 Lun a Sáb de 9 a 21hs</li>
           </ul>
         </div>
+
         <div class="footer__social">
           <h4>Seguinos</h4>
           <ul>
-            <li><a href="https://www.instagram.com/balbihome_jujuy" target="_blank">Instagram</a></li>
-            <li><a href="https://www.facebook.com/share/18gMqwsBkf/" target="_blank">Facebook</a></li>
+            <li>
+              <a
+                href="https://www.instagram.com/balbihome_jujuy"
+                target="_blank"
+              >
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.facebook.com/share/18gMqwsBkf/"
+                target="_blank"
+              >
+                Facebook
+              </a>
+            </li>
           </ul>
         </div>
       </div>
+
       <div class="footer__bottom">
         <p>© 2026 Balbi Home. Todos los derechos reservados.</p>
       </div>
     </footer>
+
+    <!-- ========================================
+         MODAL DEL PANEL DE ADMINISTRACIÓN
+         HU-S3-08 | Issue #64
+
+         Se utilizará para:
+         - Ver los detalles de un producto.
+         - Confirmar la eliminación de un producto.
+         ======================================== -->
+    <div
+      class="admin-modal"
+      id="admin-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="admin-modal-titulo"
+      aria-describedby="admin-modal-mensaje"
+      hidden
+    >
+      <div class="admin-modal__contenido">
+
+        <button
+          type="button"
+          class="admin-modal__cerrar"
+          id="admin-modal-cerrar"
+          aria-label="Cerrar ventana"
+        >
+          &times;
+        </button>
+
+        <h2 id="admin-modal-titulo">
+          Detalle del producto
+        </h2>
+
+        <!-- Contenido dinámico del producto -->
+        <div id="admin-modal-detalle" hidden></div>
+
+        <p id="admin-modal-mensaje"></p>
+
+        <div class="admin-modal__acciones">
+
+          <button
+            type="button"
+            class="btn"
+            id="admin-modal-cancelar"
+          >
+            Cerrar
+          </button>
+
+          <button
+            type="button"
+            class="btn btn--primary"
+            id="admin-modal-confirmar"
+            hidden
+          >
+            Eliminar producto
+          </button>
+
+        </div>
+      </div>
+    </div>
+
     <script src="js/navbar.js"></script>
+    <script src="js/admin.js"></script>
   </body>
 </html>
