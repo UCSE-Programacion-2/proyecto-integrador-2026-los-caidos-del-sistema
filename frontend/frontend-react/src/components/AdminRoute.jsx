@@ -1,17 +1,17 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import { obtenerUsuario } from '../utils/session';
+import { useAuth } from '../context/authContext';
 
 // Ruta protegida: sin sesión manda al login, sin rol admin manda al inicio
 function AdminRoute() {
   const location = useLocation();
-  const usuario = obtenerUsuario();
+  const { estaLogueado, esAdmin } = useAuth();
 
-  if (!usuario) {
+  if (!estaLogueado) {
     return <Navigate to='/login' replace state={{ desde: location.pathname }} />;
   }
 
-  if (usuario.role !== 'admin') {
+  if (!esAdmin) {
     return <Navigate to='/' replace />;
   }
 
