@@ -3,13 +3,16 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
+import AuthProvider from './context/AuthProvider';
 import './styles/index.css';
 
-// Punto de entrada: el router envuelve a toda la app (SPA sin recargas)
+// Punto de entrada: el router y la sesión envuelven a toda la app
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>,
 );

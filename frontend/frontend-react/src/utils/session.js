@@ -1,4 +1,4 @@
-// Claves de localStorage donde el login guarda la sesión (mismas que el Sprint 3)
+// Claves de localStorage donde se guarda la sesión (mismas que el Sprint 3)
 const TOKEN_KEY = 'token';
 const USER_KEY = 'user';
 
@@ -16,4 +16,16 @@ export function obtenerUsuario() {
   } catch (error) {
     return null;
   }
+}
+
+// Guarda el token y el usuario que devuelve el login
+export function guardarSesion(token, usuario) {
+  localStorage.setItem(TOKEN_KEY, token);
+  localStorage.setItem(USER_KEY, JSON.stringify(usuario));
+}
+
+// Borra la sesión al cerrar sesión
+export function borrarSesion() {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
 }
