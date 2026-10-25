@@ -1,6 +1,7 @@
+
 /* ========================================
    PANEL DE ADMINISTRACIÓN — BALBI HOME
-   feat(ui-admin)
+   HU-S3-08 | Issue #64
    ======================================== */
 
 .admin__header {
@@ -179,7 +180,236 @@
   color: var(--color-primary);
 }
 
-/* Tablet */
+/* ========================================
+   ELEMENTOS OCULTOS
+   ======================================== */
+
+#admin-cancelar[hidden],
+#admin-modal[hidden],
+#admin-modal-detalle[hidden],
+#admin-modal-confirmar[hidden] {
+  display: none !important;
+}
+
+/* ========================================
+   MODAL — ESTILO BALBI HOME
+
+   Inspirado en el modal del checkout:
+   - Fondo oscuro
+   - Ventana blanca
+   - Rojo principal
+   - Tipografías del proyecto
+   - Bordes redondeados
+   ======================================== */
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.55);
+  overflow-y: auto;
+}
+
+.admin-modal__contenido {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 36px 30px;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Botón X para cerrar */
+
+.admin-modal__cerrar {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  color: var(--color-text-soft);
+  font-size: 25px;
+  line-height: 1;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.admin-modal__cerrar:hover {
+  background-color: var(--color-bg-soft);
+  color: var(--color-primary);
+}
+
+/* Título del modal */
+
+#admin-modal-titulo {
+  font-family: var(--font-primary);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  line-height: 1.3;
+  margin: 4px 24px 22px;
+}
+
+/* ========================================
+   DETALLE DEL PRODUCTO
+   ======================================== */
+
+#admin-modal-detalle {
+  text-align: left;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Imagen opcional */
+
+.admin-modal__imagen {
+  display: block;
+  width: 100%;
+  max-height: 190px;
+  object-fit: contain;
+  background-color: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin-bottom: 22px;
+}
+
+/* Cada dato se muestra como una fila ordenada */
+
+.admin-modal__dato {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+  overflow-wrap: anywhere;
+}
+
+.admin-modal__dato:last-child {
+  border-bottom: none;
+}
+
+.admin-modal__dato strong {
+  flex-shrink: 0;
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.admin-modal__dato {
+  color: var(--color-text-soft);
+}
+
+/* Destacar el precio con el rojo del proyecto */
+
+.admin-modal__dato:nth-last-child(3) {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* ========================================
+   MENSAJE DE CONFIRMACIÓN
+   ======================================== */
+
+#admin-modal-mensaje {
+  font-family: var(--font-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-soft);
+  margin-bottom: 26px;
+  white-space: pre-line;
+}
+
+/* No reservar espacio cuando no hay mensaje */
+
+#admin-modal-mensaje:empty {
+  display: none;
+}
+
+/* ========================================
+   BOTONES DEL MODAL
+   ======================================== */
+
+.admin-modal__acciones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-modal__acciones .btn {
+  flex: 1;
+  min-width: 130px;
+  padding: 14px 20px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+/* Botón Cerrar / Cancelar */
+
+#admin-modal-cancelar {
+  background-color: var(--color-bg-soft);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-border);
+}
+
+#admin-modal-cancelar:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-primary);
+}
+
+/* Botón Eliminar */
+
+#admin-modal-confirmar {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: 1px solid var(--color-primary);
+}
+
+#admin-modal-confirmar:hover {
+  background-color: #a8291d;
+}
+
+.admin-modal__acciones .btn:focus-visible,
+.admin-modal__cerrar:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.admin-modal__acciones .btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   TABLET
+   ======================================== */
+
 @media (min-width: 768px) {
   .admin__header {
     padding: var(--spacing-2xl) var(--spacing-xl);
@@ -205,7 +435,10 @@
   }
 }
 
-/* Desktop */
+/* ========================================
+   DESKTOP
+   ======================================== */
+
 @media (min-width: 1024px) {
   .admin__layout {
     grid-template-columns: 340px minmax(0, 1fr);
@@ -215,5 +448,36 @@
   .admin__tabla th,
   .admin__tabla td {
     padding: var(--spacing-md);
+  }
+}
+
+/* ========================================
+   RESPONSIVE — MODAL
+   ======================================== */
+
+@media (max-width: 480px) {
+  .admin-modal {
+    padding: 12px;
+  }
+
+  .admin-modal__contenido {
+    padding: 28px 20px;
+    max-height: calc(100vh - 24px);
+  }
+
+  #admin-modal-titulo {
+    font-size: 21px;
+  }
+
+  .admin-modal__dato {
+    gap: 12px;
+  }
+
+  .admin-modal__acciones {
+    flex-direction: column;
+  }
+
+  .admin-modal__acciones .btn {
+    width: 100%;
   }
 }
