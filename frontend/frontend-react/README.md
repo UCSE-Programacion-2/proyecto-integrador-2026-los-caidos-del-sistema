@@ -1,6 +1,7 @@
 # Frontend React
 
 ## Objetivo
+
 Implementar el mismo producto que en `frontend-vanilla`, pero con React, manteniendo el mismo contrato con el backend.
 
 ## Sprint cubierto
@@ -31,18 +32,25 @@ Orientativa (adapten al template que usen, por ejemplo Vite):
 
 ## Configuración
 
-Documentá cómo setear la URL del backend:
+La URL del backend se define con la variable `VITE_API_URL` (se usa en `src/services/api.js`).
 
-- ejemplo: `VITE_API_URL` (si usan Vite)
-- o una constante en `src/config.js`
+1. Copiar `.env.example` como `.env`.
+2. En local dejar `VITE_API_URL=http://localhost:4000/api`.
+3. En producción (Vercel) cargar `VITE_API_URL` con la URL pública del backend.
+
+El archivo `.env` no se sube al repositorio.
 
 ## Ejecución
 
-En este README tenés que incluir:
+Requiere el backend corriendo en el puerto 4000 (`cd backend && npm run dev`).
 
-1. `npm install`
-2. `npm run dev` (o comando equivalente)
-3. Variables necesarias (si aplica)
+```bash
+cd frontend/frontend-react
+npm install
+npm run dev      # servidor de desarrollo en http://localhost:5173
+npm run build    # build de producción en dist/
+npm run lint     # ESLint + Stylelint
+```
 
 ## Checklist
 
@@ -55,4 +63,3 @@ En este README tenés que incluir:
 - React Router DOM (SPA sin recargas al navegar).
 - Componentización (Navbar, ProductCard, Footer, etc.).
 - Rutas protegidas para admin (solo si el usuario tiene rol).
-
