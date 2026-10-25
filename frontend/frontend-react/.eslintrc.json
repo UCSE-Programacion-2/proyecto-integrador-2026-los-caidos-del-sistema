@@ -30,7 +30,21 @@
     "react/require-default-props": "off",
     "react-refresh/only-export-components": [
       "warn",
-      { "allowConstantExport": true }
+      {
+        "allowConstantExport": true
+      }
+    ],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "vite.config.js"
+        ]
+      }
     ]
-  }
+  },
+  "ignorePatterns": [
+    "dist/",
+    "node_modules/"
+  ]
 }
