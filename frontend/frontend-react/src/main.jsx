@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import AuthProvider from './context/AuthProvider';
 import './styles/index.css';
+import './styles/components.css';
 
 // Punto de entrada: el router y la sesión envuelven a toda la app
 createRoot(document.getElementById('root')).render(
