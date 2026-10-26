@@ -1,0 +1,275 @@
+/* ========================================
+   CARRITO DE COMPRAS — BALBI HOME
+   HU-S4-07: Carrito global con Context API
+   ======================================== */
+
+/* ========== ENCABEZADO ========== */
+
+.carrito__header {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.carrito__header p {
+  color: var(--color-text-soft);
+  font-size: var(--text-base);
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+
+.carrito__container {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: var(--spacing-xl);
+  align-items: start;
+}
+
+/* ========== PRODUCTOS ========== */
+
+.carrito__productos {
+  min-width: 0;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.carrito__productos h2 {
+  font-size: var(--text-xl);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.carrito__tabla-contenedor {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.carrito__tabla {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.carrito__tabla th {
+  padding: var(--spacing-md);
+  background-color: var(--color-bg-soft);
+  color: var(--color-secondary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-border);
+}
+
+.carrito__tabla td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.carrito__tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ========== INFORMACIÓN DEL PRODUCTO ========== */
+
+.carrito__producto {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  min-width: 170px;
+}
+
+.carrito__producto-img {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent);
+  border-radius: var(--radius-md);
+  font-size: var(--text-2xl);
+}
+
+.carrito__producto h3 {
+  font-size: var(--text-base);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.carrito__producto p {
+  font-size: var(--text-sm);
+  color: var(--color-text-soft);
+}
+
+/* ========== CONTROLES DE CANTIDAD ========== */
+
+.carrito__cantidad {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 4px;
+}
+
+.carrito__cantidad span {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.carrito__cantidad-btn {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-soft);
+  color: var(--color-primary);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.carrito__cantidad-btn:hover:not(:disabled) {
+  background-color: var(--color-accent);
+}
+
+.carrito__cantidad-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ========== SUBTOTAL Y ELIMINACIÓN ========== */
+
+.carrito__subtotal-producto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  white-space: nowrap;
+}
+
+.carrito__subtotal-producto span {
+  font-weight: 600;
+}
+
+.carrito__eliminar-btn {
+  border: none;
+  background-color: transparent;
+  padding: var(--spacing-xs);
+  font-size: var(--text-lg);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.carrito__eliminar-btn:hover {
+  transform: scale(1.15);
+}
+
+/* ========== RESUMEN DE COMPRA ========== */
+
+.carrito__resumen {
+  background-color: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-sm);
+}
+
+.carrito__resumen h2 {
+  font-size: var(--text-xl);
+  color: var(--color-secondary);
+  margin-bottom: var(--spacing-lg);
+}
+
+.carrito__resumen-linea,
+.carrito__resumen-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.carrito__resumen-linea span {
+  color: var(--color-text-soft);
+}
+
+.carrito__resumen-total {
+  border-top: 2px solid var(--color-border);
+  padding-top: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+  font-size: var(--text-xl);
+  font-weight: 700;
+}
+
+.carrito__resumen-total strong {
+  color: var(--color-primary);
+}
+
+.carrito__resumen .btn {
+  display: block;
+  width: 100%;
+  margin-top: var(--spacing-md);
+}
+
+/* ========== CARRITO VACÍO ========== */
+
+.carrito__vacio {
+  text-align: center;
+  background-color: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-2xl);
+}
+
+.carrito__vacio h2 {
+  color: var(--color-secondary);
+  font-size: var(--text-2xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.carrito__vacio p {
+  color: var(--color-text-soft);
+  margin-bottom: var(--spacing-xl);
+}
+
+/* ========== MENSAJES DE ERROR ========== */
+
+.carrito__error {
+  color: var(--color-primary-dark);
+  background-color: #fff0ed;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (width <= 900px) {
+  .carrito__container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (width <= 600px) {
+  .carrito__productos,
+  .carrito__resumen {
+    padding: var(--spacing-md);
+  }
+
+  .carrito__tabla {
+    min-width: 580px;
+  }
+
+  .carrito__header {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .carrito__vacio {
+    padding: var(--spacing-xl);
+  }
+}

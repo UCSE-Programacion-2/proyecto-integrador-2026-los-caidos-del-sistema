@@ -1,8 +1,13 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
+import { useCart } from '../context/cartContext';
 
 function Navbar() {
   const { usuario, estaLogueado, esAdmin, logout } = useAuth();
+
+  // Obtenemos la cantidad total de productos del carrito global.
+  const { cantidadTotal } = useCart();
+
   const navigate = useNavigate();
 
   const cerrarSesion = () => {
@@ -44,6 +49,14 @@ function Navbar() {
                 className={({ isActive }) => (isActive ? 'active' : '')}
               >
                 Carrito
+                {cantidadTotal > 0 && (
+                  <span
+                    className="navbar__cart-count"
+                    aria-label={`${cantidadTotal} productos en el carrito`}
+                  >
+                    {cantidadTotal}
+                  </span>
+                )}
               </NavLink>
             </li>
 
