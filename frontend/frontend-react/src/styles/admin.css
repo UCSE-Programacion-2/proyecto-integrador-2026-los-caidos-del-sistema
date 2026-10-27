@@ -1,0 +1,374 @@
+/* ========================================
+   PANEL DE ADMINISTRACIÓN — BALBI HOME
+   HU-S4-08 — ISSUE #82
+   ======================================== */
+
+/* Contenedor principal */
+.admin-panel {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-2xl) var(--spacing-lg);
+}
+
+/* Encabezado */
+.admin-panel__header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.admin-panel__header h1 {
+  color: var(--color-primary);
+  font-family: var(--font-primary);
+  font-size: var(--text-3xl);
+  margin-bottom: var(--spacing-sm);
+}
+
+.admin-panel__header p {
+  color: var(--color-text-soft);
+}
+
+/* Secciones del panel */
+.admin-panel__section {
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.admin-panel__section h2 {
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Formulario */
+.admin-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.admin-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  min-width: 0;
+}
+
+.admin-form__field--full {
+  grid-column: 1 / -1;
+}
+
+.admin-form__field label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.admin-form__field input,
+.admin-form__field textarea,
+.admin-form__field select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.admin-form__field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.admin-form__field input:focus,
+.admin-form__field textarea:focus,
+.admin-form__field select:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 1px;
+}
+
+/* Botones */
+.admin-form__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.admin-btn {
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 11px 18px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.admin-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-btn--primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+.admin-btn--primary:hover:not(:disabled) {
+  background-color: var(--color-primary-dark);
+}
+
+.admin-btn--secondary {
+  background-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.admin-btn--edit {
+  background-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.admin-btn--delete {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
+}
+
+/* Mensajes */
+.admin-message {
+  grid-column: 1 / -1;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  margin: 0;
+}
+
+.admin-message--success {
+  background-color: #e7f5e9;
+  color: #206b35;
+}
+
+.admin-message--error {
+  background-color: #fdecea;
+  color: #9c2720;
+}
+
+/* Tabla de productos */
+.admin-table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.admin-table th {
+  background-color: var(--color-bg-soft);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.admin-table td {
+  color: var(--color-text);
+}
+
+.admin-table__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+/* Adaptación a celulares */
+@media (max-width: 768px) {
+  .admin-panel {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+
+  .admin-panel__section {
+    padding: var(--spacing-lg);
+  }
+
+  .admin-form {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-form__field--full,
+  .admin-form__actions,
+  .admin-message {
+    grid-column: 1;
+  }
+
+  .admin-panel__header h1 {
+    font-size: var(--text-2xl);
+  }
+
+  .admin-table {
+    min-width: 620px;
+  }
+}
+
+/* ========================================
+   MODAL DE ELIMINACIÓN — BALBI HOME
+   HU-S4-08 — ISSUE #82
+   ======================================== */
+
+/* Fondo oscuro que cubre toda la pantalla */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+/* Tarjeta blanca del modal */
+.admin-modal {
+  width: 100%;
+  max-width: 440px;
+
+  background-color: #ffffff;
+  border: 1px solid #e0d9cf;
+  border-radius: 16px;
+
+  padding: 36px 30px;
+  text-align: center;
+
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.2);
+
+  animation: admin-modal-aparecer 0.2s ease-out;
+}
+
+/* Ícono de advertencia */
+.admin-modal__icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 20px;
+
+  border-radius: 50%;
+
+  background-color: #fdecea;
+  color: #c0392b;
+
+  font-size: 32px;
+  font-weight: 700;
+}
+
+/* Título del modal */
+.admin-modal h2 {
+  margin: 0 0 16px;
+
+  color: #3d3d3d;
+  font-family: var(--font-primary);
+  font-size: 24px;
+}
+
+/* Texto del modal */
+.admin-modal p {
+  margin: 0 0 12px;
+
+  color: #3d3d3d;
+  line-height: 1.6;
+}
+
+/* Nombre del producto */
+.admin-modal strong {
+  color: #c0392b;
+}
+
+/* Advertencia */
+.admin-modal__advertencia {
+  font-size: 14px;
+  color: #8c6b63 !important;
+}
+
+/* Contenedor de los botones */
+.admin-modal__acciones {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+
+  margin-top: 28px;
+}
+
+/* Tamaño de los botones */
+.admin-modal__acciones .admin-btn {
+  min-width: 130px;
+}
+
+/* Botón rojo de confirmación */
+.admin-modal__acciones .admin-btn--primary {
+  background-color: #c0392b;
+  color: #ffffff;
+}
+
+/* Botón beige para cancelar */
+.admin-modal__acciones .admin-btn--secondary {
+  background-color: #f2ead8;
+  color: #3d3d3d;
+}
+
+/* Animación al abrir el modal */
+@keyframes admin-modal-aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ========================================
+   ADAPTACIÓN A CELULARES
+   ======================================== */
+
+@media (max-width: 480px) {
+  .admin-modal {
+    padding: 28px 20px;
+  }
+
+  .admin-modal h2 {
+    font-size: 21px;
+  }
+
+  .admin-modal__acciones {
+    flex-direction: column;
+  }
+
+  .admin-modal__acciones .admin-btn {
+    width: 100%;
+  }
+}
+
+/* Respeta la configuración de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  .admin-modal {
+    animation: none;
+  }
+}
