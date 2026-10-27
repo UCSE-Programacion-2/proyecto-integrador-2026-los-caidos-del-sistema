@@ -132,14 +132,15 @@
   transition: var(--transition);
 }
 
-.carrito__cantidad-btn:hover:not(:disabled) {
-  background-color: var(--color-accent);
-}
-
 .carrito__cantidad-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.carrito__cantidad-btn:hover:not(:disabled) {
+  background-color: var(--color-accent);
+}
+
 
 /* ========== SUBTOTAL Y ELIMINACIÓN ========== */
 
