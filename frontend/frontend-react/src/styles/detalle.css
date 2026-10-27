@@ -1,0 +1,112 @@
+/* ========================================
+   DETALLE DE PRODUCTO — BALBI HOME
+   HU-S4-05
+   ======================================== */
+
+.detalle__volver {
+  display: inline-block;
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.detalle__volver:hover {
+  text-decoration: underline;
+}
+
+/* Contenedor principal */
+
+.detalle__contenido {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-2xl);
+  align-items: start;
+}
+
+/* Imagen del producto */
+
+.detalle__imagen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 350px;
+  padding: var(--spacing-xl);
+  background-color: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.detalle__imagen img {
+  width: 100%;
+  max-height: 450px;
+  object-fit: contain;
+}
+
+.detalle__imagen p {
+  color: var(--color-text-soft);
+  text-align: center;
+}
+
+/* Información del producto */
+
+.detalle__informacion {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+}
+
+.detalle__categoria {
+  color: var(--color-text-soft);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+}
+
+.detalle__informacion h1 {
+  margin-bottom: 0;
+  color: var(--color-secondary);
+  font-size: var(--text-3xl);
+}
+
+.detalle__precio {
+  color: var(--color-primary);
+  font-size: var(--text-3xl);
+  font-weight: 700;
+}
+
+.detalle__descripcion {
+  line-height: 1.7;
+  color: var(--color-text);
+}
+
+.detalle__stock {
+  font-weight: 600;
+  color: var(--color-secondary);
+}
+
+/* Botón y confirmación */
+
+.detalle__informacion .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.detalle__mensaje {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-soft);
+  color: var(--color-secondary);
+  font-weight: 600;
+}
+
+/* Diseño responsive */
+
+@media (width <= 768px) {
+  .detalle__contenido {
+    grid-template-columns: 1fr;
+  }
+
+  .detalle__imagen {
+    min-height: 250px;
+  }
+}
