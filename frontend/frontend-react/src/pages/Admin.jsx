@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { apiFetch } from '../services/api';
 import '../styles/admin.css';
 
-// Valores iniciales del formulario.
+// =====================================================
+// VALORES INICIALES DEL FORMULARIO
+// =====================================================
+
 const formularioInicial = {
   name: '',
   description: '',
@@ -20,35 +23,61 @@ const categorias = [
   'Electrodomésticos',
 ];
 
+// Formatea el precio para mostrarlo en pesos argentinos.
+const formatearPrecio = (precio) =>
+  new Intl.NumberFormat('es-AR', {
+    style: 'currency',
+    currency: 'ARS',
+    maximumFractionDigits: 2,
+  }).format(precio);
+
 function Admin() {
   // =====================================================
-  // ESTADOS DEL COMPONENTE
+  // 1. ESTADOS DEL COMPONENTE
   // =====================================================
 
-  // Productos obtenidos desde la API.
+  // Productos obtenidos desde MongoDB mediante la API.
   const [productos, setProductos] = useState([]);
 
-  // Controlan la carga y los errores del listado.
+  // Estados del listado.
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
 
-  // Datos ingresados en el formulario.
-  const [formulario, setFormulario] = useState({ ...formularioInicial });
+  // Datos del formulario.
+  const [formulario, setFormulario] = useState({
+    ...formularioInicial,
+  });
 
-  // ID del producto seleccionado para editar.
-  // Si es null, el formulario permite agregar productos.
+  // ID del producto que se está editando.
+  // Si es null, el formulario sirve para agregar productos.
   const [productoEditando, setProductoEditando] = useState(null);
 
-  // Estados para controlar las operaciones.
+  // Controla el envío del formulario.
   const [guardando, setGuardando] = useState(false);
+
+  // Producto seleccionado para consultar sus detalles.
+  const [productoAVer, setProductoAVer] = useState(null);
+
+  // Producto seleccionado para confirmar su eliminación.
+  const [productoAEliminar, setProductoAEliminar] = useState(null);
+
+  // ID del producto cuya eliminación está en proceso.
   const [productoEliminando, setProductoEliminando] = useState(null);
 
-  // Mensajes de éxito y error.
+  // Mensajes del panel.
   const [mensaje, setMensaje] = useState('');
   const [errorFormulario, setErrorFormulario] = useState('');
 
+  // Referencias para controlar el foco de los modales.
+  const modalRef = useRef(null);
+  const botonCerrarRef = useRef(null);
+  const botonOrigenRef = useRef(null);
+
+  // Determina si hay algún modal abierto.
+  const modalAbierto = productoAVer !== null || productoAEliminar !== null;
+
   // =====================================================
-  // 1. OBTENER PRODUCTOS
+  // 2. CONSULTAR PRODUCTOS
   // GET /api/products
   // =====================================================
 
@@ -60,7 +89,7 @@ function Admin() {
 
         const datos = await apiFetch('/products');
 
-        // El backend devuelve { products: [...] }.
+        // El backend devuelve un objeto con la propiedad products.
         setProductos(datos.products);
       } catch (error) {
         setError(error.message);
@@ -73,7 +102,71 @@ function Admin() {
   }, []);
 
   // =====================================================
-  // 2. ACTUALIZAR CAMPOS DEL FORMULARIO
+  // 3. CONTROLAR LOS MODALES
+  // =====================================================
+
+  useEffect(() => {
+    if (!modalAbierto) {
+      return;
+    }
+
+    // Guardamos el desplazamiento anterior de la página.
+    const overflowAnterior = document.body.style.overflow;
+
+    // Bloqueamos el scroll de la página de fondo.
+    document.body.style.overflow = 'hidden';
+
+    // Enfocamos el primer botón del modal.
+    botonCerrarRef.current?.focus();
+
+    const manejarTeclado = (evento) => {
+      // Escape cierra el modal si no hay una eliminación en curso.
+      if (evento.key === 'Escape') {
+        if (productoEliminando === null) {
+          evento.preventDefault();
+          setProductoAVer(null);
+          setProductoAEliminar(null);
+        }
+
+        return;
+      }
+
+      // Mantenemos el foco dentro del modal.
+      if (evento.key === 'Tab' && modalRef.current) {
+        const elementos = modalRef.current.querySelectorAll(
+          'button:not(:disabled), a[href], input:not(:disabled)'
+        );
+
+        if (elementos.length === 0) {
+          return;
+        }
+
+        const primero = elementos[0];
+        const ultimo = elementos[elementos.length - 1];
+
+        if (evento.shiftKey && document.activeElement === primero) {
+          evento.preventDefault();
+          ultimo.focus();
+        } else if (
+          !evento.shiftKey &&
+          document.activeElement === ultimo
+        ) {
+          evento.preventDefault();
+          primero.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', manejarTeclado);
+
+    return () => {
+      document.body.style.overflow = overflowAnterior;
+      document.removeEventListener('keydown', manejarTeclado);
+    };
+  }, [modalAbierto, productoEliminando]);
+
+  // =====================================================
+  // 4. ACTUALIZAR LOS CAMPOS DEL FORMULARIO
   // =====================================================
 
   const manejarCambio = (evento) => {
@@ -86,7 +179,7 @@ function Admin() {
   };
 
   // =====================================================
-  // 3. VALIDAR DATOS DEL PRODUCTO
+  // 5. VALIDAR LOS DATOS DEL PRODUCTO
   // =====================================================
 
   const validarFormulario = () => {
@@ -118,13 +211,13 @@ function Admin() {
   };
 
   // =====================================================
-  // 4. SELECCIONAR PRODUCTO PARA EDITAR
+  // 6. SELECCIONAR PRODUCTO PARA EDITAR
   // =====================================================
 
   const editarProducto = (producto) => {
     setProductoEditando(producto._id);
 
-    // Cargamos los datos del producto en el formulario.
+    // Cargamos los datos existentes en el formulario.
     setFormulario({
       name: producto.name,
       description: producto.description,
@@ -137,7 +230,7 @@ function Admin() {
     setMensaje('');
     setErrorFormulario('');
 
-    // Desplazamos la página hacia el formulario.
+    // Llevamos al administrador al formulario.
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -145,7 +238,7 @@ function Admin() {
   };
 
   // =====================================================
-  // 5. CANCELAR EDICIÓN
+  // 7. CANCELAR EDICIÓN
   // =====================================================
 
   const cancelarEdicion = () => {
@@ -157,7 +250,7 @@ function Admin() {
   };
 
   // =====================================================
-  // 6. AGREGAR O EDITAR PRODUCTO
+  // 8. AGREGAR O ACTUALIZAR PRODUCTO
   // POST /api/products
   // PUT /api/products/:id
   // =====================================================
@@ -175,7 +268,7 @@ function Admin() {
       return;
     }
 
-    // Datos que espera el backend.
+    // Preparamos los datos para enviarlos al backend.
     const datosProducto = {
       name: formulario.name.trim(),
       description: formulario.description.trim(),
@@ -189,7 +282,7 @@ function Admin() {
       setGuardando(true);
 
       if (productoEditando) {
-        // EDITAR: PUT /api/products/:id
+        // UPDATE: modificar un producto existente.
         const datos = await apiFetch(`/products/${productoEditando}`, {
           method: 'PUT',
           body: JSON.stringify(datosProducto),
@@ -206,13 +299,13 @@ function Admin() {
 
         setMensaje('Producto actualizado correctamente.');
       } else {
-        // AGREGAR: POST /api/products
+        // CREATE: agregar un nuevo producto.
         const datos = await apiFetch('/products', {
           method: 'POST',
           body: JSON.stringify(datosProducto),
         });
 
-        // Incorporamos el nuevo producto al listado.
+        // Incorporamos el producto creado al listado.
         setProductos((anteriores) => [
           ...anteriores,
           datos.product,
@@ -232,19 +325,63 @@ function Admin() {
   };
 
   // =====================================================
-  // 7. ELIMINAR PRODUCTO
+  // 9. ABRIR MODAL PARA VER UN PRODUCTO
+  // =====================================================
+
+  const abrirModalDetalle = (producto, evento) => {
+    // Recordamos el botón que abrió el modal.
+    botonOrigenRef.current = evento.currentTarget;
+
+    // Guardamos el producto seleccionado.
+    setProductoAVer(producto);
+
+    setMensaje('');
+    setErrorFormulario('');
+  };
+
+  // =====================================================
+  // 10. ABRIR MODAL PARA ELIMINAR UN PRODUCTO
+  // =====================================================
+
+  const abrirModalEliminar = (producto, evento) => {
+    botonOrigenRef.current = evento.currentTarget;
+
+    setProductoAEliminar(producto);
+
+    setMensaje('');
+    setErrorFormulario('');
+  };
+
+  // =====================================================
+  // 11. CERRAR CUALQUIER MODAL
+  // =====================================================
+
+  const cerrarModal = () => {
+    // No cerramos mientras se procesa una eliminación.
+    if (productoEliminando !== null) {
+      return;
+    }
+
+    setProductoAVer(null);
+    setProductoAEliminar(null);
+
+    // Devolvemos el foco al botón que abrió el modal.
+    requestAnimationFrame(() => {
+      botonOrigenRef.current?.focus();
+    });
+  };
+
+  // =====================================================
+  // 12. ELIMINAR PRODUCTO
   // DELETE /api/products/:id
   // =====================================================
 
-  const eliminarProducto = async (producto) => {
-    // Solicitamos confirmación antes de eliminar.
-    const confirmado = window.confirm(
-      `¿Estás seguro de que querés eliminar "${producto.name}"?`
-    );
-
-    if (!confirmado) {
+  const confirmarEliminacion = async () => {
+    if (!productoAEliminar || productoEliminando !== null) {
       return;
     }
+
+    const producto = productoAEliminar;
 
     setMensaje('');
     setErrorFormulario('');
@@ -252,35 +389,36 @@ function Admin() {
     try {
       setProductoEliminando(producto._id);
 
-      // Solicitamos al backend que elimine el producto.
+      // Solicitamos al backend eliminar el producto.
       await apiFetch(`/products/${producto._id}`, {
         method: 'DELETE',
       });
 
-      // Quitamos el producto eliminado de la tabla.
+      // Quitamos el producto de la tabla.
       setProductos((anteriores) =>
-        anteriores.filter(
-          (item) => item._id !== producto._id
-        )
+        anteriores.filter((item) => item._id !== producto._id)
       );
 
-      // Si estábamos editando el producto eliminado,
-      // limpiamos el formulario.
+      // Si se estaba editando, limpiamos el formulario.
       if (productoEditando === producto._id) {
         setProductoEditando(null);
         setFormulario({ ...formularioInicial });
       }
 
       setMensaje('Producto eliminado correctamente.');
+
+      // Cerramos el modal.
+      setProductoAEliminar(null);
     } catch (error) {
       setErrorFormulario(error.message);
+      setProductoAEliminar(null);
     } finally {
       setProductoEliminando(null);
     }
   };
 
   // =====================================================
-  // 8. INTERFAZ DEL PANEL ADMINISTRATIVO
+  // 13. INTERFAZ DEL PANEL ADMINISTRATIVO
   // =====================================================
 
   return (
@@ -401,13 +539,19 @@ function Admin() {
 
           {/* MENSAJES */}
           {mensaje && (
-            <p className='admin-message admin-message--success' role='status'>
+            <p
+              className='admin-message admin-message--success'
+              role='status'
+            >
               {mensaje}
             </p>
           )}
 
           {errorFormulario && (
-            <p className='admin-message admin-message--error' role='alert'>
+            <p
+              className='admin-message admin-message--error'
+              role='alert'
+            >
               {errorFormulario}
             </p>
           )}
@@ -447,17 +591,17 @@ function Admin() {
       <section className='admin-panel__section'>
         <h2>Listado de productos</h2>
 
-        {/* MENSAJE DE CARGA */}
         {cargando && <p>Cargando productos...</p>}
 
-        {/* ERROR AL CONSULTAR LA API */}
         {error && (
-          <p className='admin-message admin-message--error' role='alert'>
+          <p
+            className='admin-message admin-message--error'
+            role='alert'
+          >
             Error: {error}
           </p>
         )}
 
-        {/* TABLA DE PRODUCTOS */}
         {!cargando && !error && (
           <>
             {productos.length === 0 ? (
@@ -480,11 +624,26 @@ function Admin() {
                       <tr key={producto._id}>
                         <td>{producto.name}</td>
                         <td>{producto.category}</td>
-                        <td>${producto.price}</td>
+                        <td>{formatearPrecio(producto.price)}</td>
                         <td>{producto.stock}</td>
 
                         <td>
                           <div className='admin-table__actions'>
+                            {/* VER DETALLE */}
+                            <button
+                              className='admin-btn admin-btn--view'
+                              type='button'
+                              onClick={(evento) =>
+                                abrirModalDetalle(producto, evento)
+                              }
+                              disabled={
+                                guardando ||
+                                productoEliminando !== null
+                              }
+                            >
+                              Ver
+                            </button>
+
                             {/* EDITAR */}
                             <button
                               className='admin-btn admin-btn--edit'
@@ -502,15 +661,15 @@ function Admin() {
                             <button
                               className='admin-btn admin-btn--delete'
                               type='button'
-                              onClick={() => eliminarProducto(producto)}
+                              onClick={(evento) =>
+                                abrirModalEliminar(producto, evento)
+                              }
                               disabled={
                                 guardando ||
                                 productoEliminando !== null
                               }
                             >
-                              {productoEliminando === producto._id
-                                ? 'Eliminando...'
-                                : 'Eliminar'}
+                              Eliminar
                             </button>
                           </div>
                         </td>
@@ -523,6 +682,155 @@ function Admin() {
           </>
         )}
       </section>
+
+      {/* ============================================
+          MODAL PARA VER DETALLES DEL PRODUCTO
+          ============================================ */}
+
+      {productoAVer && (
+        <div
+          className='admin-modal-overlay'
+          onMouseDown={(evento) => {
+            if (evento.target === evento.currentTarget) {
+              cerrarModal();
+            }
+          }}
+        >
+          <div
+            ref={modalRef}
+            className='admin-modal admin-modal--detalle'
+            role='dialog'
+            aria-modal='true'
+            aria-labelledby='admin-detalle-titulo'
+          >
+            {/* TÍTULO */}
+            <h2 id='admin-detalle-titulo'>
+              Detalle del producto
+            </h2>
+
+            {/* IMAGEN */}
+            {productoAVer.image ? (
+              <img
+                className='admin-detalle__imagen'
+                src={productoAVer.image}
+                alt={productoAVer.name}
+              />
+            ) : (
+              <div className='admin-detalle__sin-imagen'>
+                Imagen no disponible
+              </div>
+            )}
+
+            {/* DATOS DEL PRODUCTO */}
+            <div className='admin-detalle__informacion'>
+              <h3>{productoAVer.name}</h3>
+
+              <p>
+                <strong>Categoría:</strong>{' '}
+                {productoAVer.category}
+              </p>
+
+              <p>
+                <strong>Descripción:</strong>{' '}
+                {productoAVer.description}
+              </p>
+
+              <p>
+                <strong>Precio:</strong>{' '}
+                {formatearPrecio(productoAVer.price)}
+              </p>
+
+              <p>
+                <strong>Stock:</strong>{' '}
+                {productoAVer.stock} unidades
+              </p>
+            </div>
+
+            {/* CERRAR */}
+            <div className='admin-modal__acciones'>
+              <button
+                ref={botonCerrarRef}
+                className='admin-btn admin-btn--primary'
+                type='button'
+                onClick={cerrarModal}
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ============================================
+          MODAL PARA CONFIRMAR ELIMINACIÓN
+          ============================================ */}
+
+      {productoAEliminar && (
+        <div
+          className='admin-modal-overlay'
+          onMouseDown={(evento) => {
+            if (evento.target === evento.currentTarget) {
+              cerrarModal();
+            }
+          }}
+        >
+          <div
+            ref={modalRef}
+            className='admin-modal'
+            role='alertdialog'
+            aria-modal='true'
+            aria-labelledby='admin-eliminar-titulo'
+            aria-describedby='admin-eliminar-descripcion'
+          >
+            {/* ÍCONO DE ADVERTENCIA */}
+            <div
+              className='admin-modal__icono'
+              aria-hidden='true'
+            >
+              !
+            </div>
+
+            {/* TÍTULO */}
+            <h2 id='admin-eliminar-titulo'>
+              ¿Eliminar producto?
+            </h2>
+
+            {/* DESCRIPCIÓN */}
+            <p id='admin-eliminar-descripcion'>
+              ¿Estás segura de que querés eliminar{' '}
+              <strong>«{productoAEliminar.name}»</strong>?
+            </p>
+
+            <p className='admin-modal__advertencia'>
+              Esta acción no se puede deshacer.
+            </p>
+
+            {/* BOTONES */}
+            <div className='admin-modal__acciones'>
+              <button
+                ref={botonCerrarRef}
+                className='admin-btn admin-btn--secondary'
+                type='button'
+                onClick={cerrarModal}
+                disabled={productoEliminando !== null}
+              >
+                Cancelar
+              </button>
+
+              <button
+                className='admin-btn admin-btn--primary'
+                type='button'
+                onClick={confirmarEliminacion}
+                disabled={productoEliminando !== null}
+              >
+                {productoEliminando !== null
+                  ? 'Eliminando...'
+                  : 'Sí, eliminar'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
