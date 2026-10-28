@@ -16,42 +16,34 @@ function Navbar() {
   };
 
   return (
-    <header className="navbar">
-      <div className="navbar__container">
-        <Link to="/" className="navbar__logo">
+    <header className='navbar'>
+      <div className='navbar__container'>
+        <Link to='/' className='navbar__logo'>
           BALBI <span>HOME</span>
         </Link>
 
-        <nav className="navbar__nav" aria-label="Navegación principal">
-          <ul className="navbar__links">
+        <nav className='navbar__nav' aria-label='Navegación principal'>
+          <ul className='navbar__links'>
             <li>
-              <NavLink
-                to="/"
-                end
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
+              <NavLink to='/' end className={({ isActive }) => (isActive ? 'active' : '')}>
                 Inicio
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                to="/catalogo"
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
+              <NavLink to='/catalogo' className={({ isActive }) => (isActive ? 'active' : '')}>
                 Catálogo
               </NavLink>
             </li>
 
             <li>
-              <NavLink
-                to="/carrito"
-                className={({ isActive }) => (isActive ? 'active' : '')}
-              >
+              <NavLink to='/carrito' className={({ isActive }) => (isActive ? 'active' : '')}>
                 Carrito
                 {cantidadTotal > 0 && (
                   <span
-                    className="navbar__cart-count"
+                    // key: al cambiar la cantidad se vuelve a montar y repite la animación
+                    key={cantidadTotal}
+                    className='navbar__cart-count'
                     aria-label={`${cantidadTotal} productos en el carrito`}
                   >
                     {cantidadTotal}
@@ -62,10 +54,7 @@ function Navbar() {
 
             {esAdmin && (
               <li>
-                <NavLink
-                  to="/admin"
-                  className={({ isActive }) => (isActive ? 'active' : '')}
-                >
+                <NavLink to='/admin' className={({ isActive }) => (isActive ? 'active' : '')}>
                   Admin
                 </NavLink>
               </li>
@@ -73,25 +62,16 @@ function Navbar() {
 
             {!estaLogueado ? (
               <li>
-                <NavLink
-                  to="/login"
-                  className={({ isActive }) => (isActive ? 'active' : '')}
-                >
+                <NavLink to='/login' className={({ isActive }) => (isActive ? 'active' : '')}>
                   Ingresar
                 </NavLink>
               </li>
             ) : (
               <>
-                <li className="navbar__usuario">
-                  Hola, {usuario.name}
-                </li>
+                <li className='navbar__usuario'>Hola, {usuario.name}</li>
 
                 <li>
-                  <button
-                    type="button"
-                    className="navbar__logout"
-                    onClick={cerrarSesion}
-                  >
+                  <button type='button' className='navbar__logout' onClick={cerrarSesion}>
                     Cerrar sesión
                   </button>
                 </li>

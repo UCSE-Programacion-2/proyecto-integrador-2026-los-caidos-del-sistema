@@ -1,4 +1,3 @@
-
 const express = require('express');
 
 const {
@@ -29,7 +28,7 @@ const requireAdmin = (req, res, next) => {
     });
   }
 
-  next();
+  return next();
 };
 
 // ========================================

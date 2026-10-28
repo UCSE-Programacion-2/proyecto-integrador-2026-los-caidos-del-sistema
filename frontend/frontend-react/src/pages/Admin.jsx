@@ -16,15 +16,10 @@ const formularioInicial = {
 };
 
 // Categorías permitidas por el backend.
-const categorias = [
-  'Bazar',
-  'Decoración',
-  'Blanco',
-  'Electrodomésticos',
-];
+const categorias = ['Bazar', 'Decoración', 'Blanco', 'Electrodomésticos'];
 
 // Formatea el precio para mostrarlo en pesos argentinos.
-const formatearPrecio = (precio) =>
+const formatearPrecio = precio =>
   new Intl.NumberFormat('es-AR', {
     style: 'currency',
     currency: 'ARS',
@@ -91,8 +86,8 @@ function Admin() {
 
         // El backend devuelve un objeto con la propiedad products.
         setProductos(datos.products);
-      } catch (error) {
-        setError(error.message);
+      } catch (err) {
+        setError(err.message);
       } finally {
         setCargando(false);
       }
@@ -107,7 +102,7 @@ function Admin() {
 
   useEffect(() => {
     if (!modalAbierto) {
-      return;
+      return undefined;
     }
 
     // Guardamos el desplazamiento anterior de la página.
@@ -119,7 +114,7 @@ function Admin() {
     // Enfocamos el primer botón del modal.
     botonCerrarRef.current?.focus();
 
-    const manejarTeclado = (evento) => {
+    const manejarTeclado = evento => {
       // Escape cierra el modal si no hay una eliminación en curso.
       if (evento.key === 'Escape') {
         if (productoEliminando === null) {
@@ -134,7 +129,7 @@ function Admin() {
       // Mantenemos el foco dentro del modal.
       if (evento.key === 'Tab' && modalRef.current) {
         const elementos = modalRef.current.querySelectorAll(
-          'button:not(:disabled), a[href], input:not(:disabled)'
+          'button:not(:disabled), a[href], input:not(:disabled)',
         );
 
         if (elementos.length === 0) {
@@ -147,10 +142,7 @@ function Admin() {
         if (evento.shiftKey && document.activeElement === primero) {
           evento.preventDefault();
           ultimo.focus();
-        } else if (
-          !evento.shiftKey &&
-          document.activeElement === ultimo
-        ) {
+        } else if (!evento.shiftKey && document.activeElement === ultimo) {
           evento.preventDefault();
           primero.focus();
         }
@@ -169,10 +161,10 @@ function Admin() {
   // 4. ACTUALIZAR LOS CAMPOS DEL FORMULARIO
   // =====================================================
 
-  const manejarCambio = (evento) => {
+  const manejarCambio = evento => {
     const { name, value } = evento.target;
 
-    setFormulario((anterior) => ({
+    setFormulario(anterior => ({
       ...anterior,
       [name]: value,
     }));
@@ -214,7 +206,7 @@ function Admin() {
   // 6. SELECCIONAR PRODUCTO PARA EDITAR
   // =====================================================
 
-  const editarProducto = (producto) => {
+  const editarProducto = producto => {
     setProductoEditando(producto._id);
 
     // Cargamos los datos existentes en el formulario.
@@ -255,7 +247,7 @@ function Admin() {
   // PUT /api/products/:id
   // =====================================================
 
-  const guardarProducto = async (evento) => {
+  const guardarProducto = async evento => {
     evento.preventDefault();
 
     setMensaje('');
@@ -289,12 +281,10 @@ function Admin() {
         });
 
         // Actualizamos el producto en la tabla.
-        setProductos((anteriores) =>
-          anteriores.map((producto) =>
-            producto._id === productoEditando
-              ? datos.product
-              : producto
-          )
+        setProductos(anteriores =>
+          anteriores.map(producto =>
+            producto._id === productoEditando ? datos.product : producto,
+          ),
         );
 
         setMensaje('Producto actualizado correctamente.');
@@ -306,10 +296,7 @@ function Admin() {
         });
 
         // Incorporamos el producto creado al listado.
-        setProductos((anteriores) => [
-          ...anteriores,
-          datos.product,
-        ]);
+        setProductos(anteriores => [...anteriores, datos.product]);
 
         setMensaje('Producto agregado correctamente.');
       }
@@ -317,8 +304,8 @@ function Admin() {
       // Limpiamos el formulario después de guardar.
       setFormulario({ ...formularioInicial });
       setProductoEditando(null);
-    } catch (error) {
-      setErrorFormulario(error.message);
+    } catch (err) {
+      setErrorFormulario(err.message);
     } finally {
       setGuardando(false);
     }
@@ -395,9 +382,7 @@ function Admin() {
       });
 
       // Quitamos el producto de la tabla.
-      setProductos((anteriores) =>
-        anteriores.filter((item) => item._id !== producto._id)
-      );
+      setProductos(anteriores => anteriores.filter(item => item._id !== producto._id));
 
       // Si se estaba editando, limpiamos el formulario.
       if (productoEditando === producto._id) {
@@ -409,13 +394,22 @@ function Admin() {
 
       // Cerramos el modal.
       setProductoAEliminar(null);
-    } catch (error) {
-      setErrorFormulario(error.message);
+    } catch (err) {
+      setErrorFormulario(err.message);
       setProductoAEliminar(null);
     } finally {
       setProductoEliminando(null);
     }
   };
+
+  // Texto del botón principal según lo que esté pasando
+  let textoBotonGuardar = 'Agregar producto';
+
+  if (guardando) {
+    textoBotonGuardar = 'Guardando...';
+  } else if (productoEditando) {
+    textoBotonGuardar = 'Guardar cambios';
+  }
 
   // =====================================================
   // 13. INTERFAZ DEL PANEL ADMINISTRATIVO
@@ -434,11 +428,7 @@ function Admin() {
           ============================================ */}
 
       <section className='admin-panel__section'>
-        <h2>
-          {productoEditando
-            ? 'Editar producto'
-            : 'Agregar producto'}
-        </h2>
+        <h2>{productoEditando ? 'Editar producto' : 'Agregar producto'}</h2>
 
         <form className='admin-form' onSubmit={guardarProducto}>
           {/* NOMBRE */}
@@ -468,7 +458,7 @@ function Admin() {
             >
               <option value=''>Seleccionar categoría</option>
 
-              {categorias.map((categoria) => (
+              {categorias.map(categoria => (
                 <option key={categoria} value={categoria}>
                   {categoria}
                 </option>
@@ -523,9 +513,7 @@ function Admin() {
 
           {/* IMAGEN */}
           <div className='admin-form__field admin-form__field--full'>
-            <label htmlFor='imagen-producto'>
-              URL de la imagen (opcional)
-            </label>
+            <label htmlFor='imagen-producto'>URL de la imagen (opcional)</label>
 
             <input
               id='imagen-producto'
@@ -539,19 +527,13 @@ function Admin() {
 
           {/* MENSAJES */}
           {mensaje && (
-            <p
-              className='admin-message admin-message--success'
-              role='status'
-            >
+            <p className='admin-message admin-message--success' role='status'>
               {mensaje}
             </p>
           )}
 
           {errorFormulario && (
-            <p
-              className='admin-message admin-message--error'
-              role='alert'
-            >
+            <p className='admin-message admin-message--error' role='alert'>
               {errorFormulario}
             </p>
           )}
@@ -563,11 +545,7 @@ function Admin() {
               type='submit'
               disabled={guardando || productoEliminando !== null}
             >
-              {guardando
-                ? 'Guardando...'
-                : productoEditando
-                  ? 'Guardar cambios'
-                  : 'Agregar producto'}
+              {textoBotonGuardar}
             </button>
 
             {productoEditando && (
@@ -594,93 +572,75 @@ function Admin() {
         {cargando && <p>Cargando productos...</p>}
 
         {error && (
-          <p
-            className='admin-message admin-message--error'
-            role='alert'
-          >
+          <p className='admin-message admin-message--error' role='alert'>
             Error: {error}
           </p>
         )}
 
-        {!cargando && !error && (
-          <>
-            {productos.length === 0 ? (
-              <p>No hay productos registrados.</p>
-            ) : (
-              <div className='admin-table-container'>
-                <table className='admin-table'>
-                  <thead>
-                    <tr>
-                      <th>Nombre</th>
-                      <th>Categoría</th>
-                      <th>Precio</th>
-                      <th>Stock</th>
-                      <th>Acciones</th>
+        {!cargando &&
+          !error &&
+          (productos.length === 0 ? (
+            <p>No hay productos registrados.</p>
+          ) : (
+            <div className='admin-table-container'>
+              <table className='admin-table'>
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {productos.map(producto => (
+                    <tr key={producto._id}>
+                      <td>{producto.name}</td>
+                      <td>{producto.category}</td>
+                      <td>{formatearPrecio(producto.price)}</td>
+                      <td>{producto.stock}</td>
+
+                      <td>
+                        <div className='admin-table__actions'>
+                          {/* VER DETALLE */}
+                          <button
+                            className='admin-btn admin-btn--view'
+                            type='button'
+                            onClick={evento => abrirModalDetalle(producto, evento)}
+                            disabled={guardando || productoEliminando !== null}
+                          >
+                            Ver
+                          </button>
+
+                          {/* EDITAR */}
+                          <button
+                            className='admin-btn admin-btn--edit'
+                            type='button'
+                            onClick={() => editarProducto(producto)}
+                            disabled={guardando || productoEliminando !== null}
+                          >
+                            Editar
+                          </button>
+
+                          {/* ELIMINAR */}
+                          <button
+                            className='admin-btn admin-btn--delete'
+                            type='button'
+                            onClick={evento => abrirModalEliminar(producto, evento)}
+                            disabled={guardando || productoEliminando !== null}
+                          >
+                            Eliminar
+                          </button>
+                        </div>
+                      </td>
                     </tr>
-                  </thead>
-
-                  <tbody>
-                    {productos.map((producto) => (
-                      <tr key={producto._id}>
-                        <td>{producto.name}</td>
-                        <td>{producto.category}</td>
-                        <td>{formatearPrecio(producto.price)}</td>
-                        <td>{producto.stock}</td>
-
-                        <td>
-                          <div className='admin-table__actions'>
-                            {/* VER DETALLE */}
-                            <button
-                              className='admin-btn admin-btn--view'
-                              type='button'
-                              onClick={(evento) =>
-                                abrirModalDetalle(producto, evento)
-                              }
-                              disabled={
-                                guardando ||
-                                productoEliminando !== null
-                              }
-                            >
-                              Ver
-                            </button>
-
-                            {/* EDITAR */}
-                            <button
-                              className='admin-btn admin-btn--edit'
-                              type='button'
-                              onClick={() => editarProducto(producto)}
-                              disabled={
-                                guardando ||
-                                productoEliminando !== null
-                              }
-                            >
-                              Editar
-                            </button>
-
-                            {/* ELIMINAR */}
-                            <button
-                              className='admin-btn admin-btn--delete'
-                              type='button'
-                              onClick={(evento) =>
-                                abrirModalEliminar(producto, evento)
-                              }
-                              disabled={
-                                guardando ||
-                                productoEliminando !== null
-                              }
-                            >
-                              Eliminar
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-          </>
-        )}
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          ))}
       </section>
 
       {/* ============================================
@@ -690,7 +650,8 @@ function Admin() {
       {productoAVer && (
         <div
           className='admin-modal-overlay'
-          onMouseDown={(evento) => {
+          role='presentation'
+          onMouseDown={evento => {
             if (evento.target === evento.currentTarget) {
               cerrarModal();
             }
@@ -704,9 +665,7 @@ function Admin() {
             aria-labelledby='admin-detalle-titulo'
           >
             {/* TÍTULO */}
-            <h2 id='admin-detalle-titulo'>
-              Detalle del producto
-            </h2>
+            <h2 id='admin-detalle-titulo'>Detalle del producto</h2>
 
             {/* IMAGEN */}
             {productoAVer.image ? (
@@ -716,9 +675,7 @@ function Admin() {
                 alt={productoAVer.name}
               />
             ) : (
-              <div className='admin-detalle__sin-imagen'>
-                Imagen no disponible
-              </div>
+              <div className='admin-detalle__sin-imagen'>Imagen no disponible</div>
             )}
 
             {/* DATOS DEL PRODUCTO */}
@@ -726,23 +683,19 @@ function Admin() {
               <h3>{productoAVer.name}</h3>
 
               <p>
-                <strong>Categoría:</strong>{' '}
-                {productoAVer.category}
+                <strong>Categoría:</strong> {productoAVer.category}
               </p>
 
               <p>
-                <strong>Descripción:</strong>{' '}
-                {productoAVer.description}
+                <strong>Descripción:</strong> {productoAVer.description}
               </p>
 
               <p>
-                <strong>Precio:</strong>{' '}
-                {formatearPrecio(productoAVer.price)}
+                <strong>Precio:</strong> {formatearPrecio(productoAVer.price)}
               </p>
 
               <p>
-                <strong>Stock:</strong>{' '}
-                {productoAVer.stock} unidades
+                <strong>Stock:</strong> {productoAVer.stock} unidades
               </p>
             </div>
 
@@ -768,7 +721,8 @@ function Admin() {
       {productoAEliminar && (
         <div
           className='admin-modal-overlay'
-          onMouseDown={(evento) => {
+          role='presentation'
+          onMouseDown={evento => {
             if (evento.target === evento.currentTarget) {
               cerrarModal();
             }
@@ -783,27 +737,19 @@ function Admin() {
             aria-describedby='admin-eliminar-descripcion'
           >
             {/* ÍCONO DE ADVERTENCIA */}
-            <div
-              className='admin-modal__icono'
-              aria-hidden='true'
-            >
+            <div className='admin-modal__icono' aria-hidden='true'>
               !
             </div>
 
             {/* TÍTULO */}
-            <h2 id='admin-eliminar-titulo'>
-              ¿Eliminar producto?
-            </h2>
+            <h2 id='admin-eliminar-titulo'>¿Eliminar producto?</h2>
 
             {/* DESCRIPCIÓN */}
             <p id='admin-eliminar-descripcion'>
-              ¿Estás segura de que querés eliminar{' '}
-              <strong>«{productoAEliminar.name}»</strong>?
+              ¿Estás segura de que querés eliminar <strong>«{productoAEliminar.name}»</strong>?
             </p>
 
-            <p className='admin-modal__advertencia'>
-              Esta acción no se puede deshacer.
-            </p>
+            <p className='admin-modal__advertencia'>Esta acción no se puede deshacer.</p>
 
             {/* BOTONES */}
             <div className='admin-modal__acciones'>
@@ -823,9 +769,7 @@ function Admin() {
                 onClick={confirmarEliminacion}
                 disabled={productoEliminando !== null}
               >
-                {productoEliminando !== null
-                  ? 'Eliminando...'
-                  : 'Sí, eliminar'}
+                {productoEliminando !== null ? 'Eliminando...' : 'Sí, eliminar'}
               </button>
             </div>
           </div>

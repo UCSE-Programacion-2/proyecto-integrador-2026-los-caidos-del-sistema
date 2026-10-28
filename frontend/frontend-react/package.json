@@ -7,16 +7,17 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . && stylelint \"**/*.css\"",
-    "lint:fix": "eslint . --fix && stylelint \"**/*.css\" --fix",
-    "lint:js": "eslint .",
-    "lint:js:fix": "eslint . --fix",
+    "lint": "eslint . --ext .js,.jsx && stylelint \"**/*.css\"",
+    "lint:fix": "eslint . --ext .js,.jsx --fix && stylelint \"**/*.css\" --fix",
+    "lint:js": "eslint . --ext .js,.jsx",
+    "lint:js:fix": "eslint . --ext .js,.jsx --fix",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "stylelint \"**/*.css\" --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "dependencies": {
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.30.6"

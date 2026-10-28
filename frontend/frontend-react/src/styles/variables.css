@@ -11,9 +11,12 @@
   --color-accent: #f2ead8; /* Beige crema — fondos destacados */
 
   /* === FONDOS === */
-  --color-bg: #fff; /* Fondo general */
-  --color-bg-soft: #faf7f4; /* Fondo suave — secciones alternas */
-  --color-bg-dark: #2c2c2c; /* Fondo oscuro — footer */
+  --color-bg: #fff; /* Fondo de tarjetas y paneles */
+  --color-bg-soft: #fcf7ee; /* Fondo suave — paneles secundarios */
+  --color-bg-dark: #2c2c2c; /* Fondo oscuro — navbar, footer y bloques oscuros */
+  --color-crema: #f6eedf; /* Fondo general de la página (familia del beige de marca) */
+  --color-crema-hundida: #e9dcc4; /* Bordes y controles sobre crema */
+  --color-primary-claro: #e2604f; /* Rojo de marca aclarado — texto sobre fondo oscuro */
 
   /* === TEXTOS === */
   --color-text: #3d3d3d; /* Texto principal */
@@ -55,7 +58,9 @@
   --shadow-sm: 0 1px 3px rgb(0 0 0 / 8%);
   --shadow-md: 0 4px 12px rgb(0 0 0 / 10%);
   --shadow-lg: 0 8px 24px rgb(0 0 0 / 12%);
+  --shadow-primary: 0 6px 16px rgb(192 57 43 / 28%); /* Sombra con el rojo de marca */
 
   /* === TRANSICIONES === */
   --transition: all 0.3s ease;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* Salida suave, para animaciones de entrada */
 }

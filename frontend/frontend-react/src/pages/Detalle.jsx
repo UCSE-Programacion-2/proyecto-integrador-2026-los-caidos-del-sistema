@@ -6,7 +6,7 @@ import '../styles/detalle.css';
 
 function Detalle() {
   const { id } = useParams();
-  const { agregarAlCarrito } = useCart();
+  const { carrito, agregarAlCarrito } = useCart();
 
   const [producto, setProducto] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -46,13 +46,21 @@ function Detalle() {
       return;
     }
 
+    // No dejar agregar más unidades de las que hay en stock
+    const enCarrito = carrito.find(item => String(item.id) === String(id))?.quantity || 0;
+
+    if (enCarrito >= Number(producto.stock)) {
+      setMensaje('Ya agregaste todas las unidades disponibles.');
+      return;
+    }
+
     agregarAlCarrito(producto);
     setMensaje('¡Producto agregado al carrito!');
   }
 
   if (cargando) {
     return (
-      <section className="pagina">
+      <section className='pagina'>
         <p>Cargando producto...</p>
       </section>
     );
@@ -60,18 +68,18 @@ function Detalle() {
 
   if (error) {
     return (
-      <section className="pagina">
-        <p role="alert">{error}</p>
-        <Link to="/catalogo">Volver al catálogo</Link>
+      <section className='pagina'>
+        <p role='alert'>{error}</p>
+        <Link to='/catalogo'>Volver al catálogo</Link>
       </section>
     );
   }
 
   if (!producto) {
     return (
-      <section className="pagina">
+      <section className='pagina'>
         <h1>Producto no encontrado</h1>
-        <Link to="/catalogo">Volver al catálogo</Link>
+        <Link to='/catalogo'>Volver al catálogo</Link>
       </section>
     );
   }
@@ -84,14 +92,14 @@ function Detalle() {
   const disponible = Number(producto.stock) > 0;
 
   return (
-    <section className="pagina detalle">
-      <Link to="/catalogo" className="detalle__volver">
+    <section className='pagina detalle'>
+      <Link to='/catalogo' className='detalle__volver'>
         ← Volver al catálogo
       </Link>
 
-      <div className="detalle__contenido">
+      <div className='detalle__contenido'>
         {/* Imagen del producto */}
-        <div className="detalle__imagen">
+        <div className='detalle__imagen'>
           {producto.image ? (
             <img src={producto.image} alt={producto.name} />
           ) : (
@@ -100,30 +108,24 @@ function Detalle() {
         </div>
 
         {/* Información del producto */}
-        <div className="detalle__informacion">
-          <p className="detalle__categoria">
-            {producto.category}
-          </p>
+        <div className='detalle__informacion'>
+          <p className='detalle__categoria'>{producto.category}</p>
 
           <h1>{producto.name}</h1>
 
-          <p className="detalle__precio">
-            ${precioFormateado}
-          </p>
+          <p className='detalle__precio'>${precioFormateado}</p>
 
-          <p className="detalle__descripcion">
+          <p className='detalle__descripcion'>
             {producto.description || 'Sin descripción disponible.'}
           </p>
 
-          <p className="detalle__stock">
-            {disponible
-              ? `Disponible (${producto.stock} unidades)`
-              : 'Producto sin stock'}
+          <p className='detalle__stock'>
+            {disponible ? `Disponible (${producto.stock} unidades)` : 'Producto sin stock'}
           </p>
 
           <button
-            type="button"
-            className="btn btn--primary"
+            type='button'
+            className='btn btn--primary'
             onClick={handleAgregarAlCarrito}
             disabled={!disponible}
           >
@@ -131,7 +133,7 @@ function Detalle() {
           </button>
 
           {mensaje && (
-            <p className="detalle__mensaje" role="status">
+            <p className='detalle__mensaje' role='status'>
               {mensaje}
             </p>
           )}

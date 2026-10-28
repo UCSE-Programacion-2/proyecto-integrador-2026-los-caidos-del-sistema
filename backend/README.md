@@ -1,6 +1,7 @@
 # Backend (Node.js + Express + Mongoose)
 
 ## Objetivo
+
 Construir el backend de la app como una API (idealmente REST) que el frontend consumirá.
 
 ## Qué se espera que exista (mínimo)
@@ -45,4 +46,3 @@ Creá un `.env.example` (no suban el `.env` real):
 
 - `MONGO_URL`
 - `PORT`
-

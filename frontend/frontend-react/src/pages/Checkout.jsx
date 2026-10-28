@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useCart } from '../context/cartContext';
@@ -28,8 +28,7 @@ const datosIniciales = {
 function Checkout() {
   const navigate = useNavigate();
 
-  const { carrito, subtotal, envio, total, vaciarCarrito, errorCarrito } =
-    useCart();
+  const { carrito, subtotal, envio, total, vaciarCarrito, errorCarrito } = useCart();
 
   const [datos, setDatos] = useState(datosIniciales);
   const [modal, setModal] = useState(null);
@@ -37,10 +36,10 @@ function Checkout() {
   const botonModalRef = useRef(null);
 
   // Actualizar los datos del formulario
-  const actualizarCampo = (evento) => {
+  const actualizarCampo = evento => {
     const { name, value } = evento.target;
 
-    setDatos((datosActuales) => ({
+    setDatos(datosActuales => ({
       ...datosActuales,
       [name]: value,
     }));
@@ -64,7 +63,7 @@ function Checkout() {
   }, [modal]);
 
   // Cerrar el modal
-  const cerrarModal = () => {
+  const cerrarModal = useCallback(() => {
     if (!modal) {
       return;
     }
@@ -77,10 +76,33 @@ function Checkout() {
       // Navegar al catálogo sin recargar toda la aplicación
       navigate('/catalogo', { replace: true });
     }
-  };
+  }, [modal, navigate]);
+
+  // Teclado mientras el modal está abierto: Escape lo cierra y Tab deja el foco en el botón
+  useEffect(() => {
+    if (!modal) {
+      return undefined;
+    }
+
+    const manejarTeclado = evento => {
+      if (evento.key === 'Escape') {
+        evento.preventDefault();
+        cerrarModal();
+      }
+
+      if (evento.key === 'Tab') {
+        evento.preventDefault();
+        botonModalRef.current?.focus();
+      }
+    };
+
+    document.addEventListener('keydown', manejarTeclado);
+
+    return () => document.removeEventListener('keydown', manejarTeclado);
+  }, [modal, cerrarModal]);
 
   // Confirmar compra simulada
-  const confirmarPedido = (evento) => {
+  const confirmarPedido = evento => {
     evento.preventDefault();
 
     // No permitir confirmar un pedido con el carrito vacío
@@ -113,15 +135,7 @@ function Checkout() {
     const ciudad = datos.ciudad.trim();
 
     // Validar campos obligatorios
-    if (
-      !nombre ||
-      !apellido ||
-      !email ||
-      !telefono ||
-      !direccion ||
-      !ciudad ||
-      !datos.pago
-    ) {
+    if (!nombre || !apellido || !email || !telefono || !direccion || !ciudad || !datos.pago) {
       mostrarModal(
         'aviso',
         'Faltan datos',
@@ -160,7 +174,7 @@ function Checkout() {
   };
 
   return (
-    <main className='pagina checkout'>
+    <section className='pagina checkout'>
       <section className='checkout__header'>
         <h1>Finalizar compra</h1>
         <p>Completá tus datos para confirmar el pedido</p>
@@ -250,12 +264,7 @@ function Checkout() {
 
             <div className='form__group'>
               <label htmlFor='pago'>Método de pago</label>
-              <select
-                id='pago'
-                name='pago'
-                value={datos.pago}
-                onChange={actualizarCampo}
-              >
+              <select id='pago' name='pago' value={datos.pago} onChange={actualizarCampo}>
                 <option value=''>Seleccionar método</option>
                 <option value='efectivo'>Efectivo al retirar</option>
                 <option value='transferencia'>Transferencia bancaria</option>
@@ -282,16 +291,14 @@ function Checkout() {
             {carrito.length === 0 ? (
               <p>Tu carrito está vacío.</p>
             ) : (
-              carrito.map((producto) => (
+              carrito.map(producto => (
                 <div className='resumen__item' key={producto.id}>
                   <div>
                     <h3>{producto.name}</h3>
                     <p>Cantidad: {producto.quantity}</p>
                   </div>
 
-                  <span>
-                    {formatearPrecio(producto.price * producto.quantity)}
-                  </span>
+                  <span>{formatearPrecio(producto.price * producto.quantity)}</span>
                 </div>
               ))
             )}
@@ -322,23 +329,9 @@ function Checkout() {
           aria-modal='true'
           aria-labelledby='checkout-modal-titulo'
           aria-describedby='checkout-modal-mensaje'
-          onKeyDown={(evento) => {
-            if (evento.key === 'Escape') {
-              evento.preventDefault();
-              cerrarModal();
-            }
-
-            if (evento.key === 'Tab') {
-              evento.preventDefault();
-              botonModalRef.current?.focus();
-            }
-          }}
         >
           <div className='checkout-modal__contenido'>
-            <div
-              className='checkout-modal__icono'
-              aria-hidden='true'
-            >
+            <div className='checkout-modal__icono' aria-hidden='true'>
               {modal.tipo === 'exito' ? '✓' : '!'}
             </div>
 
@@ -361,7 +354,7 @@ function Checkout() {
           </div>
         </div>
       )}
-    </main>
+    </section>
   );
 }
 

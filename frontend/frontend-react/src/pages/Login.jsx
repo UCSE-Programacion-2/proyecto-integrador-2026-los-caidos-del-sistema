@@ -41,7 +41,7 @@ function Login() {
   return (
     <section className='login__main'>
       <div className='login__card'>
-        <h2>Iniciar sesión</h2>
+        <h1>Iniciar sesión</h1>
 
         <form className='login__form' onSubmit={manejarEnvio}>
           <div className='login__campo'>

@@ -12,7 +12,8 @@ import './styles/components.css';
 // Punto de entrada: el router, la sesión y el carrito envuelven a toda la app
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    {/* future: adopta ya el comportamiento de React Router v7 (evita los avisos en consola) */}
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <AuthProvider>
         <CartProvider>
           <App />
