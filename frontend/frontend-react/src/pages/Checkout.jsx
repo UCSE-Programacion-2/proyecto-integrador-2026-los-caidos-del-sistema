@@ -74,9 +74,6 @@ function Checkout() {
     setModal(null);
 
     if (compraConfirmada) {
-      // Vaciar el carrito después de confirmar la compra simulada
-      vaciarCarrito();
-
       // Navegar al catálogo sin recargar toda la aplicación
       navigate('/catalogo', { replace: true });
     }
@@ -146,6 +143,10 @@ function Checkout() {
       );
       return;
     }
+
+    // Vaciar el carrito apenas se confirma la compra simulada,
+    // así no queda lleno si el usuario sale sin cerrar el modal
+    vaciarCarrito();
 
     // Mostrar confirmación de compra simulada
     mostrarModal(
