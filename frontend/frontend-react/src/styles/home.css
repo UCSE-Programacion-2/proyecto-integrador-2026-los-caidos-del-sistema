@@ -31,8 +31,12 @@
 
 /* === BANNER === */
 
+/* Fondo: foto de la fachada del local con un degradado oscuro encima para que el texto se lea */
 .banner {
-  background: linear-gradient(135deg, var(--color-bg-dark) 0%, #3d1a1a 100%);
+  background:
+    linear-gradient(135deg, rgb(26 26 26 / 82%) 0%, rgb(61 26 26 / 72%) 100%),
+    url('/banner-fachada.jpg') center / cover no-repeat,
+    var(--color-bg-dark);
   min-height: 500px;
   display: flex;
   align-items: center;
