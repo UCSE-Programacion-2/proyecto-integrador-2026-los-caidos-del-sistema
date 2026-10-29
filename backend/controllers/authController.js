@@ -26,6 +26,21 @@ const register = async (req, res) => {
       user: { id: user._id, name: user.name, email: user.email, role: user.role },
     });
   } catch (error) {
+    // Datos inválidos (contraseña corta, email mal escrito): es un error del usuario, no del servidor
+    if (error.name === 'ValidationError') {
+      const primerError = Object.values(error.errors)[0];
+      return res.status(400).json({
+        error: { code: 'BAD_REQUEST', message: primerError.message },
+      });
+    }
+
+    // Email repetido que llegó al índice único (por ejemplo, dos registros al mismo tiempo)
+    if (error.code === 11000) {
+      return res.status(400).json({
+        error: { code: 'BAD_REQUEST', message: 'El email ya está registrado' },
+      });
+    }
+
     return res.status(500).json({
       error: { code: 'SERVER_ERROR', message: 'Error interno del servidor' },
     });

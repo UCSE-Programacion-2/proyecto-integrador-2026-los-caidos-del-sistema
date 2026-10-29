@@ -30,6 +30,17 @@ function Registro() {
       return;
     }
 
+    // Mismas reglas que el backend, para avisar antes de enviar
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setMensaje('Ingresá un correo electrónico válido.');
+      return;
+    }
+
+    if (formulario.password.length < 6) {
+      setMensaje('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
     setCargando(true);
     setMensaje('Registrando usuario...');
 
@@ -78,10 +89,14 @@ function Registro() {
               type='password'
               id='password'
               name='password'
-              placeholder='Creá una contraseña'
+              placeholder='Mínimo 6 caracteres'
               value={formulario.password}
               onChange={manejarCambio}
+              aria-describedby='password-ayuda'
             />
+            <small id='password-ayuda' className='login__ayuda'>
+              Usá al menos 6 caracteres.
+            </small>
           </div>
 
           <p className='login__mensaje' aria-live='polite'>
