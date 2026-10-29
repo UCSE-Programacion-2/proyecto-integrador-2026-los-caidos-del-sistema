@@ -6,7 +6,8 @@ const getProducts = async (req, res) => {
 
     const filter = {};
 
-    if (category) {
+    // Solo se acepta la categoría como texto (?category=Bazar)
+    if (typeof category === 'string' && category) {
       filter.category = category;
     }
 

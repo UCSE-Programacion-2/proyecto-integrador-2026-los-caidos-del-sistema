@@ -1,20 +1,22 @@
 import { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/authContext';
 import '../styles/login.css';
 
 // Formulario controlado de inicio de sesión (POST /api/auth/login)
 function Login() {
-  const { login } = useAuth();
+  const { login, estaLogueado } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mensaje, setMensaje] = useState(
-    location.state?.registrado ? '¡Registro exitoso! Ya podés iniciar sesión.' : '',
-  );
+  const [mensaje, setMensaje] = useState(() => {
+    if (location.state?.registrado) return '¡Registro exitoso! Ya podés iniciar sesión.';
+    if (location.state?.desde) return 'Iniciá sesión para continuar.';
+    return '';
+  });
   const [cargando, setCargando] = useState(false);
 
   const manejarEnvio = async evento => {
@@ -37,6 +39,11 @@ function Login() {
       setCargando(false);
     }
   };
+
+  // Con la sesión iniciada no tiene sentido ver el login: vuelve a donde corresponda
+  if (estaLogueado) {
+    return <Navigate to={location.state?.desde || '/'} replace />;
+  }
 
   return (
     <section className='login__main'>

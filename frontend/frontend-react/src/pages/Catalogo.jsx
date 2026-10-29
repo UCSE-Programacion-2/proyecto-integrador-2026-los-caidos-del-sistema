@@ -5,6 +5,13 @@ import ProductCard from '../components/ProductCard';
 import '../styles/home.css';
 import '../styles/catalogo.css';
 
+// Para buscar sin importar mayúsculas ni tildes ("lampara" encuentra "Lámpara")
+const normalizar = texto =>
+  texto
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
 function Catalogo() {
   // Si se llega desde una categoría del inicio (?categoria=Bazar), arranca filtrado
   const [searchParams] = useSearchParams();
@@ -52,7 +59,10 @@ function Catalogo() {
   const categoriaValida = categorias.includes(categoria) ? categoria : '';
 
   const productosFiltrados = productos
-    .filter(producto => producto.name.toLowerCase().includes(busqueda.toLowerCase()))
+    // Busca en el nombre y en la categoría
+    .filter(producto =>
+      normalizar(`${producto.name} ${producto.category}`).includes(normalizar(busqueda.trim())),
+    )
     .filter(producto => (categoriaValida ? producto.category === categoriaValida : true))
     .filter(producto =>
       precioMaximo !== '' ? Number(producto.price) <= Number(precioMaximo) : true,

@@ -1,16 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/cartContext';
+import { formatearPrecio } from '../utils/formato';
 
 import '../styles/carrito.css';
-
-// Formatear los precios en pesos argentinos
-function formatearPrecio(valor) {
-  return new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    maximumFractionDigits: 0,
-  }).format(valor);
-}
 
 function Carrito() {
   const { carrito, cambiarCantidad, eliminarDelCarrito, subtotal, envio, total, errorCarrito } =

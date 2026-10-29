@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/authContext';
 import '../styles/login.css';
 
 // Formulario controlado de registro (POST /api/auth/register)
 function Registro() {
-  const { registrar } = useAuth();
+  const { registrar, estaLogueado } = useAuth();
   const navigate = useNavigate();
 
   const [formulario, setFormulario] = useState({ name: '', email: '', password: '' });
@@ -52,6 +52,11 @@ function Registro() {
       setCargando(false);
     }
   };
+
+  // Con la sesión iniciada no hace falta registrarse
+  if (estaLogueado) {
+    return <Navigate to='/' replace />;
+  }
 
   return (
     <section className='login__main'>

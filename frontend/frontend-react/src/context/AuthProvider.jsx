@@ -1,13 +1,25 @@
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { AuthContext } from './authContext';
 import { apiFetch } from '../services/api';
-import { borrarSesion, guardarSesion, obtenerUsuario } from '../utils/session';
+import {
+  borrarSesion,
+  EVENTO_SESION_VENCIDA,
+  guardarSesion,
+  obtenerUsuario,
+} from '../utils/session';
 
 // Provee la sesión a toda la app. Arranca con la sesión guardada en localStorage
 function AuthProvider({ children }) {
   const [usuario, setUsuario] = useState(obtenerUsuario);
+
+  // Si la API avisa que el token venció, la app pasa a "sin sesión"
+  useEffect(() => {
+    const alVencer = () => setUsuario(null);
+    window.addEventListener(EVENTO_SESION_VENCIDA, alVencer);
+    return () => window.removeEventListener(EVENTO_SESION_VENCIDA, alVencer);
+  }, []);
 
   // POST /api/auth/login → guarda token y usuario
   const login = useCallback(async (email, password) => {

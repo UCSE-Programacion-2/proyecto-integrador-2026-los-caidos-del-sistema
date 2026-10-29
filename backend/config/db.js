@@ -3,6 +3,10 @@ const dns = require('dns');
 
 dns.setServers(['8.8.8.8']);
 
+// Protección contra inyección NoSQL: si llega un objeto como { "$gt": "" } en lugar de un texto,
+// Mongoose lo trata como un valor literal y no como un operador de consulta.
+mongoose.set('sanitizeFilter', true);
+
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URI);

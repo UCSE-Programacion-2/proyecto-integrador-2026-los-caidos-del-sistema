@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { apiFetch } from '../services/api';
+import { formatearPrecio } from '../utils/formato';
 import '../styles/admin.css';
 
 // =====================================================
@@ -17,14 +18,6 @@ const formularioInicial = {
 
 // Categorías permitidas por el backend.
 const categorias = ['Bazar', 'Decoración', 'Blanco', 'Electrodomésticos'];
-
-// Formatea el precio para mostrarlo en pesos argentinos.
-const formatearPrecio = precio =>
-  new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    maximumFractionDigits: 2,
-  }).format(precio);
 
 function Admin() {
   // =====================================================

@@ -3,11 +3,15 @@ const User = require('../models/User');
 
 const generateToken = (userId) =>
   jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '7d' });
+
+// Los datos del formulario tienen que llegar como texto (evita objetos como { "$gt": "" })
+const sonTextos = (...valores) => valores.every((valor) => typeof valor === 'string');
+
 const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !sonTextos(name, email, password)) {
       return res.status(400).json({
         error: { code: 'BAD_REQUEST', message: 'Todos los campos son obligatorios' },
       });
@@ -51,7 +55,7 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    if (!email || !password || !sonTextos(email, password)) {
       return res.status(400).json({
         error: { code: 'BAD_REQUEST', message: 'Email y password son obligatorios' },
       });
