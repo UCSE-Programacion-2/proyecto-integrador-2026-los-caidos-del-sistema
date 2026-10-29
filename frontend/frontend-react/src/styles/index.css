@@ -11,10 +11,33 @@
   box-sizing: border-box;
 }
 
+/* Desplazamiento suave al usar enlaces internos (ej. "Visitá el local") */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Que el menú fijo no tape el comienzo de la sección a la que se salta */
+[id] {
+  scroll-margin-top: 90px;
+}
+
+/* En pantallas angostas el menú ocupa dos renglones */
+@media (width <= 768px) {
+  [id] {
+    scroll-margin-top: 165px;
+  }
+}
+
 body {
   font-family: var(--font-secondary);
   color: var(--color-text);
-  background-color: var(--color-bg);
+  background-color: var(--color-crema);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-text-light);
 }
 
 a {
@@ -44,21 +67,32 @@ h3 {
 }
 
 .pagina h1 {
-  color: var(--color-primary);
-  font-size: var(--text-3xl);
+  color: var(--color-secondary);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin-bottom: var(--spacing-md);
 }
 
-/* === BOTONES GLOBALES === */
+/* === BOTONES GLOBALES (forma de píldora) === */
 .btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-height: 46px;
   padding: var(--spacing-sm) var(--spacing-xl);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-family: var(--font-secondary);
-  font-weight: 600;
+  font-weight: 700;
   font-size: var(--text-base);
   cursor: pointer;
-  transition: var(--transition);
+  transition:
+    transform 0.2s var(--ease-out),
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
   text-align: center;
 }
 
@@ -83,3 +117,121 @@ h3 {
   background-color: var(--color-primary);
   color: var(--color-text-light);
 }
+
+/* Botón claro: para usar sobre fondos rojos u oscuros */
+.btn--claro {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  border: 2px solid var(--color-bg);
+}
+
+/* Botón con borde claro: secundario sobre fondos rojos u oscuros */
+.btn--borde-claro {
+  background-color: transparent;
+  color: var(--color-text-light);
+  border: 2px solid rgb(255 255 255 / 70%);
+}
+
+.btn--borde-claro:hover {
+  background-color: rgb(255 255 255 / 12%);
+  border-color: var(--color-text-light);
+}
+
+.btn--claro:hover {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* Botones: se levantan un poco al pasar el mouse y se "achican" al hacer clic */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-primary);
+}
+
+.btn:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid rgb(192 57 43 / 40%);
+  outline-offset: 2px;
+}
+
+/* === ANIMACIONES === */
+
+@keyframes aparecer-arriba {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes zoom-lento {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.08);
+  }
+}
+
+@keyframes latido {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.35);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* La foto aparece desenfocada y se "enfoca" */
+@keyframes enfocar {
+  from {
+    opacity: 0;
+    filter: blur(6px);
+    transform: scale(1.03);
+  }
+}
+
+/* Cada página entra suave al navegar */
+.layout__contenido > * {
+  animation: aparecer-arriba 0.5s ease backwards;
+}
+
+/* Secciones que aparecen al hacer scroll (componente Revelar) */
+.revelar {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s var(--ease-out);
+}
+
+.revelar--visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sin animaciones para quien las tiene desactivadas en su sistema */
+/* stylelint-disable declaration-no-important -- tiene que ganarle a todas las animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+} /* stylelint-enable declaration-no-important */

@@ -13,18 +13,11 @@ function formatearPrecio(valor) {
 }
 
 function Carrito() {
-  const {
-    carrito,
-    cambiarCantidad,
-    eliminarDelCarrito,
-    subtotal,
-    envio,
-    total,
-    errorCarrito,
-  } = useCart();
+  const { carrito, cambiarCantidad, eliminarDelCarrito, subtotal, envio, total, errorCarrito } =
+    useCart();
 
   return (
-    <main className='pagina carrito'>
+    <section className='pagina carrito'>
       <section className='carrito__header'>
         <h1>Mi carrito</h1>
         <p>Revisá los productos que seleccionaste antes de finalizar tu compra.</p>
@@ -62,12 +55,12 @@ function Carrito() {
                 </thead>
 
                 <tbody>
-                  {carrito.map((producto) => (
+                  {carrito.map(producto => (
                     <tr key={producto.id}>
                       <td>
                         <div className='carrito__producto'>
                           <span className='carrito__producto-img' aria-hidden='true'>
-                            📦
+                            {producto.image ? <img src={producto.image} alt='' /> : '📦'}
                           </span>
 
                           <div>
@@ -95,6 +88,11 @@ function Carrito() {
                             type='button'
                             className='carrito__cantidad-btn'
                             onClick={() => cambiarCantidad(producto.id, 1)}
+                            // Sin más unidades en stock (los ítems viejos no guardan stock)
+                            disabled={
+                              producto.stock !== undefined &&
+                              producto.quantity >= Number(producto.stock)
+                            }
                             aria-label={`Aumentar cantidad de ${producto.name}`}
                           >
                             +
@@ -106,9 +104,7 @@ function Carrito() {
 
                       <td>
                         <div className='carrito__subtotal-producto'>
-                          <span>
-                            {formatearPrecio(producto.price * producto.quantity)}
-                          </span>
+                          <span>{formatearPrecio(producto.price * producto.quantity)}</span>
 
                           <button
                             type='button'
@@ -156,7 +152,7 @@ function Carrito() {
           </aside>
         </div>
       )}
-    </main>
+    </section>
   );
 }
 

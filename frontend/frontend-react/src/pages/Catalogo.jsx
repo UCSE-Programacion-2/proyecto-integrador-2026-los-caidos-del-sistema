@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { apiFetch } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import '../styles/home.css';
 import '../styles/catalogo.css';
 
 function Catalogo() {
+  // Si se llega desde una categoría del inicio (?categoria=Bazar), arranca filtrado
+  const [searchParams] = useSearchParams();
+
   const [productos, setProductos] = useState([]);
   const [busqueda, setBusqueda] = useState('');
-  const [categoria, setCategoria] = useState('');
+  const [categoria, setCategoria] = useState(searchParams.get('categoria') || '');
   const [precioMaximo, setPrecioMaximo] = useState('');
   const [soloDisponibles, setSoloDisponibles] = useState(false);
   const [orden, setOrden] = useState('');
@@ -42,23 +46,18 @@ function Catalogo() {
     };
   }, []);
 
-  const categorias = [...new Set(productos.map((producto) => producto.category))];
+  const categorias = [...new Set(productos.map(producto => producto.category))];
+
+  // Si la categoría de la URL no existe (ej. ?categoria=xyz), se muestran todas
+  const categoriaValida = categorias.includes(categoria) ? categoria : '';
 
   const productosFiltrados = productos
-    .filter((producto) =>
-      producto.name.toLowerCase().includes(busqueda.toLowerCase())
+    .filter(producto => producto.name.toLowerCase().includes(busqueda.toLowerCase()))
+    .filter(producto => (categoriaValida ? producto.category === categoriaValida : true))
+    .filter(producto =>
+      precioMaximo !== '' ? Number(producto.price) <= Number(precioMaximo) : true,
     )
-    .filter((producto) =>
-      categoria ? producto.category === categoria : true
-    )
-    .filter((producto) =>
-      precioMaximo !== ''
-        ? Number(producto.price) <= Number(precioMaximo)
-        : true
-    )
-    .filter((producto) =>
-      soloDisponibles ? Number(producto.stock) > 0 : true
-    )
+    .filter(producto => (soloDisponibles ? Number(producto.stock) > 0 : true))
     .sort((a, b) => {
       if (orden === 'precio-asc') {
         return Number(a.price) - Number(b.price);
@@ -76,37 +75,37 @@ function Catalogo() {
     });
 
   return (
-    <section className="pagina catalogo">
+    <section className='pagina catalogo'>
       <h1>Catálogo de productos</h1>
 
       <p>Encontrá todo lo que necesitás para tu hogar.</p>
 
-      <div className="catalogo__filtros">
+      <div className='catalogo__filtros'>
         {/* Buscador */}
         <div>
-          <label htmlFor="busqueda">Buscar producto</label>
+          <label htmlFor='busqueda'>Buscar producto</label>
 
           <input
-            id="busqueda"
-            type="search"
-            placeholder="Buscar por nombre..."
+            id='busqueda'
+            type='search'
+            placeholder='Buscar por nombre...'
             value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
+            onChange={e => setBusqueda(e.target.value)}
           />
         </div>
 
         {/* Categoría */}
         <div>
-          <label htmlFor="categoria">Categoría</label>
+          <label htmlFor='categoria'>Categoría</label>
 
           <select
-            id="categoria"
-            value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
+            id='categoria'
+            value={categoriaValida}
+            onChange={e => setCategoria(e.target.value)}
           >
-            <option value="">Todas las categorías</option>
+            <option value=''>Todas las categorías</option>
 
-            {categorias.map((nombre) => (
+            {categorias.map(nombre => (
               <option key={nombre} value={nombre}>
                 {nombre}
               </option>
@@ -116,66 +115,71 @@ function Catalogo() {
 
         {/* Precio máximo */}
         <div>
-          <label htmlFor="precio">Precio máximo</label>
+          <label htmlFor='precio'>Precio máximo</label>
 
           <input
-            id="precio"
-            type="number"
-            min="0"
-            placeholder="Sin límite"
+            id='precio'
+            type='number'
+            min='0'
+            placeholder='Sin límite'
             value={precioMaximo}
-            onChange={(e) => setPrecioMaximo(e.target.value)}
+            onChange={e => setPrecioMaximo(e.target.value)}
           />
         </div>
 
         {/* Ordenamiento */}
         <div>
-          <label htmlFor="orden">Ordenar por</label>
+          <label htmlFor='orden'>Ordenar por</label>
 
-          <select
-            id="orden"
-            value={orden}
-            onChange={(e) => setOrden(e.target.value)}
-          >
-            <option value="">Sin ordenar</option>
-            <option value="precio-asc">Menor precio</option>
-            <option value="precio-desc">Mayor precio</option>
-            <option value="nombre">Nombre (A-Z)</option>
+          <select id='orden' value={orden} onChange={e => setOrden(e.target.value)}>
+            <option value=''>Sin ordenar</option>
+            <option value='precio-asc'>Menor precio</option>
+            <option value='precio-desc'>Mayor precio</option>
+            <option value='nombre'>Nombre (A-Z)</option>
           </select>
         </div>
 
         {/* Disponibilidad */}
-        <label className="catalogo__disponibles">
+        <label className='catalogo__disponibles'>
           <input
-            type="checkbox"
+            type='checkbox'
             checked={soloDisponibles}
-            onChange={(e) => setSoloDisponibles(e.target.checked)}
+            onChange={e => setSoloDisponibles(e.target.checked)}
           />
-
           Solo productos disponibles
         </label>
       </div>
 
-      {/* Resultados */}
-      {cargando && <p>Cargando productos...</p>}
+      {/* Resultados: mientras carga se muestran tarjetas "esqueleto" */}
+      {cargando && (
+        <div aria-busy='true'>
+          <p className='aviso-servidor'>
+            Estamos despertando el servidor. La primera carga puede tardar unos segundos.
+          </p>
 
-      {error && <p role="alert">{error}</p>}
+          <div className='productos__grid'>
+            {[0, 1, 2, 3, 4, 5, 6, 7].map(n => (
+              <div className='esqueleto esqueleto--tarjeta' key={n} />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {error && <p role='alert'>{error}</p>}
 
       {!cargando && !error && (
         <>
-          <p className="catalogo__cantidad">
-            {productosFiltrados.length} productos encontrados
+          <p className='catalogo__cantidad'>
+            {productosFiltrados.length}{' '}
+            {productosFiltrados.length === 1 ? 'producto encontrado' : 'productos encontrados'}
           </p>
 
           {productosFiltrados.length === 0 ? (
             <p>No se encontraron productos.</p>
           ) : (
-            <div className="productos__grid">
-              {productosFiltrados.map((producto) => (
-                <ProductCard
-                  key={producto._id}
-                  producto={producto}
-                />
+            <div className='productos__grid'>
+              {productosFiltrados.map((producto, indice) => (
+                <ProductCard key={producto._id} producto={producto} indice={indice} />
               ))}
             </div>
           )}

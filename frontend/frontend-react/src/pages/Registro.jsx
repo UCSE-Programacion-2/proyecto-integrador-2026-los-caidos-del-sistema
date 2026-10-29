@@ -45,7 +45,7 @@ function Registro() {
   return (
     <section className='login__main'>
       <div className='login__card'>
-        <h2>Crear cuenta</h2>
+        <h1>Crear cuenta</h1>
 
         <form className='login__form' onSubmit={manejarEnvio}>
           <div className='login__campo'>

@@ -9,7 +9,7 @@ function Layout() {
     <>
       <Navbar />
 
-      <main className="layout__contenido">
+      <main className='layout__contenido'>
         <Outlet />
       </main>
 

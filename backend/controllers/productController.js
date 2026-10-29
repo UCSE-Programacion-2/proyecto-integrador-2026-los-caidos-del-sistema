@@ -1,6 +1,5 @@
 const Product = require('../models/Product');
 
-
 const getProducts = async (req, res) => {
   try {
     const { category } = req.query;
@@ -25,7 +24,6 @@ const getProducts = async (req, res) => {
     });
   }
 };
-
 
 const getProductById = async (req, res) => {
   try {
@@ -53,25 +51,11 @@ const getProductById = async (req, res) => {
   }
 };
 
-
 const createProduct = async (req, res) => {
   try {
-    const {
-      name,
-      description,
-      price,
-      category,
-      stock,
-      image,
-    } = req.body;
+    const { name, description, price, category, stock, image } = req.body;
 
-    if (
-      !name ||
-      !description ||
-      price === undefined ||
-      !category ||
-      stock === undefined
-    ) {
+    if (!name || !description || price === undefined || !category || stock === undefined) {
       return res.status(400).json({
         error: {
           code: 'BAD_REQUEST',
@@ -102,17 +86,12 @@ const createProduct = async (req, res) => {
   }
 };
 
-
 const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!product) {
       return res.status(404).json({
@@ -135,7 +114,6 @@ const updateProduct = async (req, res) => {
     });
   }
 };
-
 
 const deleteProduct = async (req, res) => {
   try {
@@ -162,7 +140,6 @@ const deleteProduct = async (req, res) => {
     });
   }
 };
-
 
 module.exports = {
   getProducts,

@@ -28,7 +28,7 @@ const userSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 async function hashPassword(next) {

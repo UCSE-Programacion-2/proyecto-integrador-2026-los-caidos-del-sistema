@@ -24,7 +24,6 @@
 }
 
 .login__main {
-  background-color: var(--color-bg-soft);
   padding: var(--spacing-2xl) var(--spacing-xl);
   display: flex;
   justify-content: center;
@@ -34,13 +33,13 @@
   width: 100%;
   max-width: 460px;
   background-color: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border: none;
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: var(--spacing-2xl);
 }
 
-.login__card h2 {
+.login__card h1 {
   font-family: var(--font-primary);
   font-size: var(--text-2xl);
   color: var(--color-secondary);

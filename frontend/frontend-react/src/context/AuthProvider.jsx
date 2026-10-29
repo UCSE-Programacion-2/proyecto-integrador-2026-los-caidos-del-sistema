@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from 'react';
 
 import { AuthContext } from './authContext';
@@ -50,5 +51,9 @@ function AuthProvider({ children }) {
 
   return <AuthContext.Provider value={valor}>{children}</AuthContext.Provider>;
 }
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default AuthProvider;

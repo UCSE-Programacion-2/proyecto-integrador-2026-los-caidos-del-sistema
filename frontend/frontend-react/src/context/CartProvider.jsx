@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { CartContext } from './cartContext';
@@ -27,6 +28,12 @@ function obtenerCarritoGuardado() {
   }
 }
 
+// Stock máximo de un ítem (los guardados antes de este cambio no lo tienen: sin límite)
+function stockMaximo(item) {
+  const stock = Number(item.stock);
+  return Number.isFinite(stock) ? stock : Infinity;
+}
+
 // Provee el estado global del carrito a toda la aplicación
 function CartProvider({ children }) {
   const [carrito, setCarrito] = useState(obtenerCarritoGuardado);
@@ -39,14 +46,12 @@ function CartProvider({ children }) {
       setErrorCarrito('');
     } catch (error) {
       console.error('Error al guardar el carrito:', error);
-      setErrorCarrito(
-        'No pudimos guardar los cambios del carrito. Intentá nuevamente.',
-      );
+      setErrorCarrito('No pudimos guardar los cambios del carrito. Intentá nuevamente.');
     }
   }, [carrito]);
 
   // Agregar un producto o aumentar su cantidad si ya existe
-  const agregarAlCarrito = useCallback((producto) => {
+  const agregarAlCarrito = useCallback(producto => {
     if (!producto || !(producto._id || producto.id)) {
       return;
     }
@@ -58,15 +63,18 @@ function CartProvider({ children }) {
       return;
     }
 
-    setCarrito((carritoActual) => {
-      const productoExistente = carritoActual.find(
-        (item) => String(item.id) === productoId,
-      );
+    setCarrito(carritoActual => {
+      const productoExistente = carritoActual.find(item => String(item.id) === productoId);
 
       if (productoExistente) {
-        return carritoActual.map((item) =>
+        // No superar el stock disponible
+        return carritoActual.map(item =>
           String(item.id) === productoId
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                stock: producto.stock,
+                quantity: Math.min(item.quantity + 1, stockMaximo({ stock: producto.stock })),
+              }
             : item,
         );
       }
@@ -79,6 +87,7 @@ function CartProvider({ children }) {
           price: precio,
           category: producto.category,
           image: producto.image,
+          stock: producto.stock,
           quantity: 1,
         },
       ];
@@ -91,16 +100,16 @@ function CartProvider({ children }) {
       return;
     }
 
-    setCarrito((carritoActual) =>
-      carritoActual.map((item) => {
+    setCarrito(carritoActual =>
+      carritoActual.map(item => {
         if (String(item.id) !== String(productoId)) {
           return item;
         }
 
         const nuevaCantidad = item.quantity + cambio;
 
-        // No permitir cantidades menores a 1
-        if (nuevaCantidad < 1) {
+        // No permitir cantidades menores a 1 ni mayores al stock disponible
+        if (nuevaCantidad < 1 || nuevaCantidad > stockMaximo(item)) {
           return item;
         }
 
@@ -110,11 +119,9 @@ function CartProvider({ children }) {
   }, []);
 
   // Eliminar un producto del carrito
-  const eliminarDelCarrito = useCallback((productoId) => {
-    setCarrito((carritoActual) =>
-      carritoActual.filter(
-        (item) => String(item.id) !== String(productoId),
-      ),
+  const eliminarDelCarrito = useCallback(productoId => {
+    setCarrito(carritoActual =>
+      carritoActual.filter(item => String(item.id) !== String(productoId)),
     );
   }, []);
 
@@ -125,22 +132,14 @@ function CartProvider({ children }) {
 
   // Calcular la cantidad total de unidades
   const cantidadTotal = useMemo(
-    () =>
-      carrito.reduce(
-        (acumulado, producto) => acumulado + producto.quantity,
-        0,
-      ),
+    () => carrito.reduce((acumulado, producto) => acumulado + producto.quantity, 0),
     [carrito],
   );
 
   // Calcular el subtotal de todos los productos
   const subtotal = useMemo(
     () =>
-      carrito.reduce(
-        (acumulado, producto) =>
-          acumulado + producto.price * producto.quantity,
-        0,
-      ),
+      carrito.reduce((acumulado, producto) => acumulado + producto.price * producto.quantity, 0),
     [carrito],
   );
 
@@ -175,11 +174,11 @@ function CartProvider({ children }) {
     ],
   );
 
-  return (
-    <CartContext.Provider value={valor}>
-      {children}
-    </CartContext.Provider>
-  );
+  return <CartContext.Provider value={valor}>{children}</CartContext.Provider>;
 }
+
+CartProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default CartProvider;
