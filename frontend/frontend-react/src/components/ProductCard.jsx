@@ -1,13 +1,9 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { formatearPrecio } from '../utils/formato';
 
 // indice: posición en la grilla, para escalonar la animación de entrada
 function ProductCard({ producto, indice = 0 }) {
-  const precioFormateado = Number(producto.price).toLocaleString('es-AR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-
   const sinStock = Number(producto.stock) <= 0;
 
   return (
@@ -28,7 +24,7 @@ function ProductCard({ producto, indice = 0 }) {
 
           <h3 className='product-card__nombre'>{producto.name}</h3>
 
-          <p className='product-card__precio'>${precioFormateado}</p>
+          <p className='product-card__precio'>{formatearPrecio(producto.price)}</p>
 
           <span className='product-card__ver'>Ver detalle</span>
         </div>

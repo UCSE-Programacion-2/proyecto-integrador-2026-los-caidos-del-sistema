@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/authContext';
 import '../styles/login.css';
 
 // Formulario controlado de registro (POST /api/auth/register)
 function Registro() {
-  const { registrar } = useAuth();
+  const { registrar, estaLogueado } = useAuth();
   const navigate = useNavigate();
 
   const [formulario, setFormulario] = useState({ name: '', email: '', password: '' });
@@ -30,6 +30,17 @@ function Registro() {
       return;
     }
 
+    // Mismas reglas que el backend, para avisar antes de enviar
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setMensaje('Ingresá un correo electrónico válido.');
+      return;
+    }
+
+    if (formulario.password.length < 6) {
+      setMensaje('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+
     setCargando(true);
     setMensaje('Registrando usuario...');
 
@@ -41,6 +52,11 @@ function Registro() {
       setCargando(false);
     }
   };
+
+  // Con la sesión iniciada no hace falta registrarse
+  if (estaLogueado) {
+    return <Navigate to='/' replace />;
+  }
 
   return (
     <section className='login__main'>
@@ -78,10 +94,14 @@ function Registro() {
               type='password'
               id='password'
               name='password'
-              placeholder='Creá una contraseña'
+              placeholder='Mínimo 6 caracteres'
               value={formulario.password}
               onChange={manejarCambio}
+              aria-describedby='password-ayuda'
             />
+            <small id='password-ayuda' className='login__ayuda'>
+              Usá al menos 6 caracteres.
+            </small>
           </div>
 
           <p className='login__mensaje' aria-live='polite'>

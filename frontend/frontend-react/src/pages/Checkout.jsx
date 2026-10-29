@@ -2,17 +2,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useCart } from '../context/cartContext';
+import { formatearPrecio } from '../utils/formato';
 
 import '../styles/checkout.css';
-
-// Formatear precios en pesos argentinos
-function formatearPrecio(valor) {
-  return new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    maximumFractionDigits: 0,
-  }).format(valor);
-}
 
 // Valores iniciales del formulario
 const datosIniciales = {
@@ -140,6 +132,20 @@ function Checkout() {
         'aviso',
         'Faltan datos',
         'Completá todos los campos del formulario y seleccioná un método de pago.',
+        'Entendido',
+      );
+      return;
+    }
+
+    // Validar el teléfono: solo números, espacios, guiones, paréntesis o +, con al menos 7 dígitos
+    const telefonoValido =
+      /^[\d\s()+-]+$/.test(telefono) && telefono.replace(/\D/g, '').length >= 7;
+
+    if (!telefonoValido) {
+      mostrarModal(
+        'aviso',
+        'Teléfono inválido',
+        'Ingresá un teléfono con al menos 7 números (ej. 388 412 3456).',
         'Entendido',
       );
       return;

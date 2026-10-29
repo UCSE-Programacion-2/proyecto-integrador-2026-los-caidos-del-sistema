@@ -82,6 +82,39 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/products', productRoutes);
 
 // ======================================================
+// RUTAS INEXISTENTES Y ERRORES
+// ======================================================
+
+// Cualquier ruta de la API que no exista responde 404 en JSON.
+app.use('/api', (req, res) => {
+  res.status(404).json({
+    error: { code: 'NOT_FOUND', message: 'Ruta no encontrada' },
+  });
+});
+
+// Manejador final de errores: siempre responde JSON (nunca la página HTML de Express).
+// eslint-disable-next-line no-unused-vars
+app.use((error, req, res, next) => {
+  if (error.message === 'Origen no permitido por CORS') {
+    return res.status(403).json({
+      error: { code: 'FORBIDDEN', message: error.message },
+    });
+  }
+
+  // JSON mal escrito en el cuerpo del pedido
+  if (error.type === 'entity.parse.failed') {
+    return res.status(400).json({
+      error: { code: 'BAD_REQUEST', message: 'El cuerpo del pedido no es un JSON válido' },
+    });
+  }
+
+  console.error(error);
+  return res.status(500).json({
+    error: { code: 'SERVER_ERROR', message: 'Error interno del servidor' },
+  });
+});
+
+// ======================================================
 // INICIAR SERVIDOR
 // ======================================================
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { apiFetch } from '../services/api';
 import { useCart } from '../context/cartContext';
+import { formatearPrecio } from '../utils/formato';
 import '../styles/detalle.css';
 
 function Detalle() {
@@ -84,11 +85,6 @@ function Detalle() {
     );
   }
 
-  const precioFormateado = Number(producto.price).toLocaleString('es-AR', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-
   const disponible = Number(producto.stock) > 0;
 
   return (
@@ -113,7 +109,7 @@ function Detalle() {
 
           <h1>{producto.name}</h1>
 
-          <p className='detalle__precio'>${precioFormateado}</p>
+          <p className='detalle__precio'>{formatearPrecio(producto.price)}</p>
 
           <p className='detalle__descripcion'>
             {producto.description || 'Sin descripción disponible.'}

@@ -268,8 +268,46 @@
     padding: var(--spacing-md);
   }
 
-  .carrito__tabla {
-    min-width: 580px;
+  /* En el celular cada producto es una tarjeta: arriba la foto y el nombre, abajo cantidad y subtotal */
+  .carrito__tabla thead {
+    display: none;
+  }
+
+  .carrito__tabla,
+  .carrito__tabla tbody {
+    display: block;
+  }
+
+  .carrito__tabla tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .carrito__tabla tbody tr:last-child {
+    border-bottom: none;
+  }
+
+  .carrito__tabla td {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  /* Producto: ocupa todo el ancho */
+  .carrito__tabla td:nth-child(1) {
+    grid-column: 1 / -1;
+  }
+
+  /* Precio unitario: no entra en el celular (el subtotal ya lo resume) */
+  .carrito__tabla td:nth-child(3) {
+    display: none;
+  }
+
+  .carrito__producto {
+    min-width: 0;
   }
 
   .carrito__header {

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
@@ -21,7 +22,8 @@ const addItemToCart = async (req, res) => {
   try {
     const { productId, quantity = 1 } = req.body;
 
-    if (!productId || quantity < 1) {
+    // productId tiene que ser un id de MongoDB y quantity un entero positivo
+    if (!mongoose.isValidObjectId(productId) || !Number.isInteger(quantity) || quantity < 1) {
       return res.status(400).json({
         error: { code: 'BAD_REQUEST', message: 'productId y quantity válidos son obligatorios' },
       });
